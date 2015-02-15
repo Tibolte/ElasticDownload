@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">sample</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_run_animation">Run animation</string>
 </resources>

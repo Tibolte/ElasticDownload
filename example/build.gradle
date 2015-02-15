@@ -20,6 +20,8 @@ android {
 }
 
 dependencies {
+    compile project(':library')
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
 }

@@ -5,8 +5,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import is.arontibo.library.ProgressDownload;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    private Timer mTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +37,35 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_run_animation) {
+            if(mTimer != null) {
+                mTimer.cancel();
+            }
+            mTimer = new Timer();
+            ProgressTask task= new ProgressTask();
+            mTimer.schedule(task, 0, 2000);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class ProgressTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    int percentage = (int) Math.floor(Math.random()*100);
+
+                    ProgressDownload progressDownload = (ProgressDownload) findViewById(R.id.progress_download);
+                    progressDownload.setPercentage(percentage);
+                }
+            });
+
+        }
+
     }
 }
