@@ -1,9 +1,11 @@
 package is.arontibo.sample;
 
+import android.animation.ObjectAnimator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.LinearInterpolator;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
             }
             mTimer = new Timer();
             ProgressTask task= new ProgressTask();
-            mTimer.schedule(task, 0, 2000);
+            mTimer.schedule(task, 0, 1000);
             return true;
         }
 
