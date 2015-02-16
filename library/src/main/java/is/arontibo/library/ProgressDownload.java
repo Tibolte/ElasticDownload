@@ -3,8 +3,10 @@ package is.arontibo.library;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathEffect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +26,7 @@ public class ProgressDownload extends View {
     private int mProgress;
     private Path mPathBlack, mPathWhite;
     private Paint mPaintBlack, mPaintWhite;
+    private PathEffect mPathBlackEffect, mPathWhiteEffect;
 
     public ProgressDownload(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,11 +43,17 @@ public class ProgressDownload extends View {
         mPaintWhite.setStyle(Paint.Style.STROKE);
         mPaintWhite.setStrokeWidth(STROKE_WIDTH);
         mPaintWhite.setColor(Color.WHITE);
+
+        mPathBlackEffect = new CornerPathEffect(10);
+        mPathWhiteEffect = new CornerPathEffect(10);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         if(mPathWhite != null && mPathBlack != null) {
+            mPaintBlack.setPathEffect(mPathBlackEffect);
+            mPaintWhite.setPathEffect(mPathWhiteEffect);
+
             canvas.drawPath(mPathBlack, mPaintBlack);
             canvas.drawPath(mPathWhite, mPaintWhite);
         }
@@ -61,9 +70,9 @@ public class ProgressDownload extends View {
     }
 
     private Path makePathBlack() {
-        Path p = new Path();
+        Path p =  new Path();
 
-        p.moveTo(Math.max(getPaddingLeft(), mProgress*mWidth/100), mHeight/2);
+        p.moveTo(Math.max(getPaddingLeft(), mProgress*mWidth/100), mHeight/2 + calculatedeltaY());
         p.lineTo(mWidth, mHeight/2);
 
         return p;
@@ -73,9 +82,17 @@ public class ProgressDownload extends View {
         Path p = new Path();
 
         p.moveTo(getPaddingLeft(), mHeight / 2);
-        p.lineTo(Math.max(getPaddingLeft(), mProgress*mWidth/100), mHeight/2);
+        p.lineTo(Math.max(getPaddingLeft(), mProgress*mWidth/100), mHeight/2 + calculatedeltaY());
 
         return p;
+    }
+
+    private int calculatedeltaY() {
+        if(mProgress <= 50) {
+            return  (mProgress * mWidth/6)/50;
+        } else {
+            return  ((100-mProgress) * mWidth/6)/50;
+        }
     }
 
     public void setPercentage(int percentage) {
