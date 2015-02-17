@@ -1,5 +1,6 @@
 package is.arontibo.library;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,8 @@ import android.graphics.PathEffect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 
 /**
  * Created by thibaultguegan on 15/02/15.
@@ -20,10 +23,11 @@ public class ProgressDownload extends View {
 
     private static final int STROKE_WIDTH = 10;
     private static final int PADDING = 50;
+    private static final long ANIMATION_DURATION = 1000;
     private static final String BACKGROUND_COLOR = "#EC5745";
 
     private int mWidth, mHeight;
-    private int mProgress;
+    private int mProgress = 0;
     private Path mPathBlack, mPathWhite;
     private Paint mPaintBlack, mPaintWhite;
     private PathEffect mPathBlackEffect, mPathWhiteEffect;
@@ -66,25 +70,35 @@ public class ProgressDownload extends View {
         mHeight = yNew;
         Log.d(LOG_TAG, String.format("width and height measured are %d and %d", mWidth, mHeight));
 
-        setPercentage(0);
+        setPercentage(mProgress);
     }
 
     private Path makePathBlack() {
-        Path p =  new Path();
 
+        if(mPathBlack ==null) {
+            mPathBlack = new Path();
+        }
+
+        Path p =  new Path();
         p.moveTo(Math.max(getPaddingLeft(), mProgress*mWidth/100), mHeight/2 + calculatedeltaY());
         p.lineTo(mWidth, mHeight/2);
+
+        mPathBlack.set(p);
 
         return p;
     }
 
-    private Path makePathWhite() {
+    private void makePathWhite() {
+
+        if(mPathWhite ==null) {
+            mPathWhite = new Path();
+        }
+
         Path p = new Path();
-
         p.moveTo(getPaddingLeft(), mHeight / 2);
-        p.lineTo(Math.max(getPaddingLeft(), mProgress*mWidth/100), mHeight/2 + calculatedeltaY());
+        p.lineTo(Math.max(getPaddingLeft(), mProgress * mWidth / 100), mHeight / 2 + calculatedeltaY());
 
-        return p;
+        mPathWhite.set(p);
     }
 
     private int calculatedeltaY() {
@@ -95,13 +109,24 @@ public class ProgressDownload extends View {
         }
     }
 
-    public void setPercentage(int percentage) {
-        if(percentage < 0 || percentage > 100)
+    public void setPercentage(int newProgress) {
+        if(newProgress < 0 || newProgress > 100)
             throw new IllegalArgumentException("setPercentage not between 0 and 100");
-        mProgress = percentage;
-        mPathBlack = makePathBlack();
-        mPathWhite = makePathWhite();
+
+        ObjectAnimator anim = ObjectAnimator.ofInt(this, "progress", getProgress(), newProgress);
+        anim.setDuration(ANIMATION_DURATION);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.start();
+    }
+
+    public void setProgress(int progress) {
+        mProgress = progress;
+        makePathBlack();
+        makePathWhite();
         invalidate();
     }
 
+    public int getProgress() {
+        return mProgress;
+    }
 }
