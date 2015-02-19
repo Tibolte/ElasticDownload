@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PathEffect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -29,34 +28,31 @@ public class ProgressDownload extends View {
     private int mProgress = 0;
     private Path mPathBlack, mPathWhite;
     private Paint mPaintBlack, mPaintWhite;
-    private PathEffect mPathBlackEffect, mPathWhiteEffect;
 
     public ProgressDownload(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setBackgroundColor(Color.parseColor(BACKGROUND_COLOR));
-        setPadding(PADDING, 0, 50, PADDING);
+        setPadding(PADDING, 0, PADDING, 0);
 
         mPaintBlack = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintBlack.setStyle(Paint.Style.STROKE);
         mPaintBlack.setStrokeWidth(STROKE_WIDTH);
         mPaintBlack.setColor(Color.BLACK);
+        mPaintBlack.setStrokeCap(Paint.Cap.ROUND);
+        mPaintBlack.setPathEffect(new CornerPathEffect(10));
 
         mPaintWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintWhite.setStyle(Paint.Style.STROKE);
         mPaintWhite.setStrokeWidth(STROKE_WIDTH);
         mPaintWhite.setColor(Color.WHITE);
-
-        mPathBlackEffect = new CornerPathEffect(10);
-        mPathWhiteEffect = new CornerPathEffect(10);
+        mPaintWhite.setStrokeCap(Paint.Cap.ROUND);
+        mPaintWhite.setPathEffect(new CornerPathEffect(10));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         if(mPathWhite != null && mPathBlack != null) {
-            mPaintBlack.setPathEffect(mPathBlackEffect);
-            mPaintWhite.setPathEffect(mPathWhiteEffect);
-
             canvas.drawPath(mPathBlack, mPaintBlack);
             canvas.drawPath(mPathWhite, mPaintWhite);
         }
