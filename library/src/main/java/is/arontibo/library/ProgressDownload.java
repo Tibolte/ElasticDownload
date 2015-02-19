@@ -11,8 +11,7 @@ import android.graphics.PathEffect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 /**
  * Created by thibaultguegan on 15/02/15.
@@ -23,7 +22,7 @@ public class ProgressDownload extends View {
 
     private static final int STROKE_WIDTH = 10;
     private static final int PADDING = 50;
-    private static final long ANIMATION_DURATION = 1000;
+    private static final long ANIMATION_DURATION_BASE = 1150;
     private static final String BACKGROUND_COLOR = "#EC5745";
 
     private int mWidth, mHeight;
@@ -114,8 +113,8 @@ public class ProgressDownload extends View {
             throw new IllegalArgumentException("setPercentage not between 0 and 100");
 
         ObjectAnimator anim = ObjectAnimator.ofInt(this, "progress", getProgress(), newProgress);
-        anim.setDuration(ANIMATION_DURATION);
-        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.setDuration(ANIMATION_DURATION_BASE-Math.abs(newProgress*10 - getProgress()*10));
+        anim.setInterpolator(new DecelerateInterpolator());
         anim.start();
     }
 
