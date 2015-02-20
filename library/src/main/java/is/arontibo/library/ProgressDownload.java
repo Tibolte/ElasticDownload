@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -26,8 +29,8 @@ public class ProgressDownload extends View {
 
     private int mWidth, mHeight;
     private int mProgress = 0;
-    private Path mPathBlack, mPathWhite;
-    private Paint mPaintBlack, mPaintWhite;
+    private Path mPathBlack, mPathWhite, mPathBubble;
+    private Paint mPaintBlack, mPaintWhite, mPaintBubble;
 
     public ProgressDownload(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,6 +51,10 @@ public class ProgressDownload extends View {
         mPaintWhite.setColor(Color.WHITE);
         mPaintWhite.setStrokeCap(Paint.Cap.ROUND);
         mPaintWhite.setPathEffect(new CornerPathEffect(10));
+
+        mPaintBubble = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintBubble.setColor(Color.WHITE);
+        mPaintBubble.setStyle(Paint.Style.FILL);
     }
 
     @Override
@@ -55,6 +62,7 @@ public class ProgressDownload extends View {
         if(mPathWhite != null && mPathBlack != null) {
             canvas.drawPath(mPathBlack, mPaintBlack);
             canvas.drawPath(mPathWhite, mPaintWhite);
+            canvas.drawPath(mPathBubble, mPaintBubble);
         }
     }
 
@@ -68,7 +76,7 @@ public class ProgressDownload extends View {
         setPercentage(mProgress);
     }
 
-    private Path makePathBlack() {
+    private void makePathBlack() {
 
         if(mPathBlack ==null) {
             mPathBlack = new Path();
@@ -79,13 +87,11 @@ public class ProgressDownload extends View {
         p.lineTo(mWidth, mHeight/2);
 
         mPathBlack.set(p);
-
-        return p;
     }
 
     private void makePathWhite() {
 
-        if(mPathWhite ==null) {
+        if(mPathWhite == null) {
             mPathWhite = new Path();
         }
 
@@ -94,6 +100,53 @@ public class ProgressDownload extends View {
         p.lineTo(Math.max(getPaddingLeft(), mProgress * mWidth / 100), mHeight / 2 + calculatedeltaY());
 
         mPathWhite.set(p);
+    }
+
+    private void makePathBubble() {
+
+        if(mPathBubble == null) {
+            mPathBubble = new Path();
+        }
+
+        Rect r = new Rect(0, 0, 85, 70);
+        int arrowWidth = r.width()/3;
+        int arrowHeight = arrowWidth/2;
+        int radius = 8;
+
+        Path path = new Path();
+
+        //down arrow
+        path.moveTo(r.width()/2-arrowWidth/2, r.height()-arrowHeight);
+        path.lineTo(r.width()/2, r.height());
+        path.lineTo(r.width()/2+arrowWidth/2, r.height()-arrowHeight);
+
+        //go to bottom-right
+        path.lineTo(r.width()-radius, r.height()-arrowHeight);
+
+        //bottom-right arc
+        path.arcTo(new RectF(r.width()-2*radius, r.height()-arrowHeight-2*radius, r.width(), r.height()-arrowHeight), 90, -90);
+
+        //go to upper-right
+        path.lineTo(r.width(), r.top + arrowHeight);
+
+        //upper-right arc
+        path.arcTo(new RectF(r.width()-2*radius, r.top, r.right, r.top+2*radius), 0, -90);
+
+        //go to upper-left
+        path.lineTo(r.left+radius, r.top);
+
+        //upper-left arc
+        path.arcTo(new RectF(r.left, r.top, r.left+2*radius, r.top+2*radius), 270, -90);
+
+        //go to bottom-left
+        path.lineTo(r.left, r.height()-arrowHeight-radius);
+
+        //bottom-left arc
+        path.arcTo(new RectF(r.left, r.height()-arrowHeight-2*radius, r.left+2*radius, r.height()-arrowHeight), 180, -90);
+
+        path.close();
+
+        mPathBubble.set(path);
     }
 
     private int calculatedeltaY() {
@@ -118,6 +171,7 @@ public class ProgressDownload extends View {
         mProgress = progress;
         makePathBlack();
         makePathWhite();
+        makePathBubble();
         invalidate();
     }
 
