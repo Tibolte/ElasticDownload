@@ -10,7 +10,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -26,10 +25,10 @@ public class ProgressDownload extends View {
     private static final String BACKGROUND_COLOR = "#EC5745";
 
     private int mWidth, mHeight, bubbleAnchorX, bubbleAnchorY, mBubbleWidth, mBubbleHeight, mPadding;
-    private int mProgress = 0, mTarget = 0;
     private Path mPathBlack, mPathWhite, mPathBubble;
     private Paint mPaintBlack, mPaintWhite, mPaintBubble, mPaintText;
     private float mDensity = getResources().getDisplayMetrics().density;
+    private float mProgress = 0, mTarget = 0;
 
     /**
      * MARK: Constructor
@@ -77,8 +76,8 @@ public class ProgressDownload extends View {
     protected void onDraw(Canvas canvas) {
         if(mPathWhite != null && mPathBlack != null) {
 
-            int textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/3.2f), mProgress*mWidth/100-(int)(mBubbleWidth/3.2f));
-            int textY = mHeight/2-mBubbleHeight/2 + calculatedeltaY();
+            float textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/3.2f), mProgress*mWidth/100-(int)(mBubbleWidth/3.2f));
+            float textY = mHeight/2-mBubbleHeight/2 + calculatedeltaY();
 
             canvas.drawPath(mPathBlack, mPaintBlack);
             canvas.drawPath(mPathWhite, mPaintWhite);
@@ -87,7 +86,7 @@ public class ProgressDownload extends View {
             canvas.save();
             canvas.rotate(mTarget-getProgress(), bubbleAnchorX, bubbleAnchorY);
             canvas.drawPath(mPathBubble, mPaintBubble);
-            canvas.drawText(String.valueOf(mProgress) + " %", textX, textY, mPaintText);
+            canvas.drawText(String.valueOf((int) mProgress) + " %", textX, textY, mPaintText);
             canvas.restore();
 
         }
@@ -143,7 +142,8 @@ public class ProgressDownload extends View {
         int height = mBubbleHeight;
         int arrowWidth = width/3;
 
-        Rect r = new Rect(Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4), mHeight/2-height + calculatedeltaY(), Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4), mHeight/2+height-height + calculatedeltaY());
+        //Rect r = new Rect(Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4), mHeight/2-height + calculatedeltaY(), Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4), mHeight/2+height-height + calculatedeltaY());
+        Rect r = new Rect((int) (Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4)), (int) (mHeight/2-height + calculatedeltaY()), (int) (Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4)), (int) (mHeight/2+height-height + calculatedeltaY()));
         int arrowHeight = (int) (arrowWidth/1.5f);
         int radius = 8;
 
@@ -189,7 +189,7 @@ public class ProgressDownload extends View {
      * MARK: Animation functions
      */
 
-    private int calculatedeltaY() {
+    private float calculatedeltaY() {
         int wireTension = 12;
         if(mProgress <= 50) {
             return  (mProgress * mWidth/wireTension)/50 + Math.abs(mTarget-getProgress());
@@ -198,19 +198,19 @@ public class ProgressDownload extends View {
         }
     }
 
-    public void setPercentage(int newProgress) {
+    public void setPercentage(float newProgress) {
         if(newProgress < 0 || newProgress > 100)
             throw new IllegalArgumentException("setPercentage not between 0 and 100");
 
         mTarget = newProgress;
 
-        ObjectAnimator anim = ObjectAnimator.ofInt(this, "progress", getProgress(), mTarget);
-        anim.setDuration(ANIMATION_DURATION_BASE-Math.abs(mTarget*10 - getProgress()*10));
+        ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
+        anim.setDuration((long) (ANIMATION_DURATION_BASE-Math.abs(mTarget*10 - getProgress()*10)));
         anim.setInterpolator(new LinearInterpolator());
         anim.start();
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(float progress) {
         mProgress = progress;
         makePathBlack();
         makePathWhite();
@@ -218,7 +218,7 @@ public class ProgressDownload extends View {
         invalidate();
     }
 
-    public int getProgress() {
+    public float getProgress() {
         return mProgress;
     }
 }
