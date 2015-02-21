@@ -21,15 +21,18 @@ public class ProgressDownload extends View {
 
     private static final String LOG_TAG = ProgressDownload.class.getSimpleName();
 
+    //TODO: adapt parameters depending on resolution
     private static final int STROKE_WIDTH = 10;
     private static final int PADDING = 60;
+    private static final int BUBBLE_WIDTH = 90;
+    private static final int BUBBLE_HEIGHT = 70;
     private static final long ANIMATION_DURATION_BASE = 1150;
     private static final String BACKGROUND_COLOR = "#EC5745";
 
     private int mWidth, mHeight;
     private int mProgress = 0;
     private Path mPathBlack, mPathWhite, mPathBubble;
-    private Paint mPaintBlack, mPaintWhite, mPaintBubble;
+    private Paint mPaintBlack, mPaintWhite, mPaintBubble, mPaintText;
 
     public ProgressDownload(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -54,6 +57,11 @@ public class ProgressDownload extends View {
         mPaintBubble = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintBubble.setColor(Color.WHITE);
         mPaintBubble.setStyle(Paint.Style.FILL);
+
+        mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintText.setColor(Color.BLACK);
+        mPaintText.setStyle(Paint.Style.FILL);
+        mPaintText.setTextSize(24);
     }
 
     @Override
@@ -62,6 +70,7 @@ public class ProgressDownload extends View {
             canvas.drawPath(mPathBlack, mPaintBlack);
             canvas.drawPath(mPathWhite, mPaintWhite);
             canvas.drawPath(mPathBubble, mPaintBubble);
+            canvas.drawText(String.valueOf(mProgress) + " %", Math.max(getPaddingLeft()-(int)(BUBBLE_WIDTH/3.2f), mProgress*mWidth/100-(int)(BUBBLE_WIDTH/3.2f)), mHeight/2-BUBBLE_HEIGHT/2 + calculatedeltaY(), mPaintText);
         }
     }
 
@@ -107,8 +116,8 @@ public class ProgressDownload extends View {
             mPathBubble = new Path();
         }
 
-        int width = 90;
-        int height = 70;
+        int width = BUBBLE_WIDTH;
+        int height = BUBBLE_HEIGHT;
         int arrowWidth = width/3;
 
         Rect r = new Rect(Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4), mHeight/2-height + calculatedeltaY(), Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4), mHeight/2+height-height + calculatedeltaY());
