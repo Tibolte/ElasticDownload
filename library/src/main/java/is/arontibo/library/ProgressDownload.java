@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -21,18 +22,14 @@ public class ProgressDownload extends View {
 
     private static final String LOG_TAG = ProgressDownload.class.getSimpleName();
 
-    //TODO: adapt parameters depending on resolution
-    private static final int STROKE_WIDTH = 10;
-    private static final int PADDING = 60;
-    private static final int BUBBLE_WIDTH = 90;
-    private static final int BUBBLE_HEIGHT = 70;
     private static final long ANIMATION_DURATION_BASE = 1150;
     private static final String BACKGROUND_COLOR = "#EC5745";
 
-    private int mWidth, mHeight, bubbleAnchorX, bubbleAnchorY;
+    private int mWidth, mHeight, bubbleAnchorX, bubbleAnchorY, mBubbleWidth, mBubbleHeight, mPadding;
     private int mProgress = 0, mTarget = 0;
     private Path mPathBlack, mPathWhite, mPathBubble;
     private Paint mPaintBlack, mPaintWhite, mPaintBubble, mPaintText;
+    private float mDensity = getResources().getDisplayMetrics().density;
 
     /**
      * MARK: Constructor
@@ -42,21 +39,25 @@ public class ProgressDownload extends View {
         super(context, attrs);
 
         setBackgroundColor(Color.parseColor(BACKGROUND_COLOR));
-        setPadding(PADDING, 0, PADDING, 0);
+        mPadding = (int) (30*mDensity);
+        mBubbleWidth = (int) (45*mDensity);
+        mBubbleHeight = (int) (35*mDensity);
+
+        setPadding(mPadding, 0, mPadding, 0);
 
         mPaintBlack = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintBlack.setStyle(Paint.Style.STROKE);
-        mPaintBlack.setStrokeWidth(STROKE_WIDTH);
+        mPaintBlack.setStrokeWidth(5*mDensity);
         mPaintBlack.setColor(Color.BLACK);
         mPaintBlack.setStrokeCap(Paint.Cap.ROUND);
-        mPaintBlack.setPathEffect(new CornerPathEffect(10));
+        mPaintBlack.setPathEffect(new CornerPathEffect(5*mDensity));
 
         mPaintWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintWhite.setStyle(Paint.Style.STROKE);
-        mPaintWhite.setStrokeWidth(STROKE_WIDTH);
+        mPaintWhite.setStrokeWidth(5*mDensity);
         mPaintWhite.setColor(Color.WHITE);
         mPaintWhite.setStrokeCap(Paint.Cap.ROUND);
-        mPaintWhite.setPathEffect(new CornerPathEffect(10));
+        mPaintWhite.setPathEffect(new CornerPathEffect(5*mDensity));
 
         mPaintBubble = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintBubble.setColor(Color.WHITE);
@@ -65,7 +66,7 @@ public class ProgressDownload extends View {
         mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintText.setColor(Color.BLACK);
         mPaintText.setStyle(Paint.Style.FILL);
-        mPaintText.setTextSize(24);
+        mPaintText.setTextSize(12*mDensity);
     }
 
     /**
@@ -76,8 +77,8 @@ public class ProgressDownload extends View {
     protected void onDraw(Canvas canvas) {
         if(mPathWhite != null && mPathBlack != null) {
 
-            int textX = Math.max(getPaddingLeft()-(int)(BUBBLE_WIDTH/3.2f), mProgress*mWidth/100-(int)(BUBBLE_WIDTH/3.2f));
-            int textY = mHeight/2-BUBBLE_HEIGHT/2 + calculatedeltaY();
+            int textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/3.2f), mProgress*mWidth/100-(int)(mBubbleWidth/3.2f));
+            int textY = mHeight/2-mBubbleHeight/2 + calculatedeltaY();
 
             canvas.drawPath(mPathBlack, mPaintBlack);
             canvas.drawPath(mPathWhite, mPaintWhite);
@@ -138,8 +139,8 @@ public class ProgressDownload extends View {
             mPathBubble = new Path();
         }
 
-        int width = BUBBLE_WIDTH;
-        int height = BUBBLE_HEIGHT;
+        int width = mBubbleWidth;
+        int height = mBubbleHeight;
         int arrowWidth = width/3;
 
         Rect r = new Rect(Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4), mHeight/2-height + calculatedeltaY(), Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4), mHeight/2+height-height + calculatedeltaY());
