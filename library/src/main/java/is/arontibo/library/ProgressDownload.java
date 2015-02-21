@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -23,7 +22,7 @@ public class ProgressDownload extends View {
     private static final String LOG_TAG = ProgressDownload.class.getSimpleName();
 
     private static final int STROKE_WIDTH = 10;
-    private static final int PADDING = 50;
+    private static final int PADDING = 60;
     private static final long ANIMATION_DURATION_BASE = 1150;
     private static final String BACKGROUND_COLOR = "#EC5745";
 
@@ -108,41 +107,44 @@ public class ProgressDownload extends View {
             mPathBubble = new Path();
         }
 
-        Rect r = new Rect(0, 0, 85, 70);
-        int arrowWidth = r.width()/3;
-        int arrowHeight = arrowWidth/2;
+        int width = 90;
+        int height = 70;
+        int arrowWidth = width/3;
+
+        Rect r = new Rect(Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4), mHeight/2-height + calculatedeltaY(), Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4), mHeight/2+height-height + calculatedeltaY());
+        int arrowHeight = (int) (arrowWidth/1.5f);
         int radius = 8;
 
         Path path = new Path();
 
         //down arrow
-        path.moveTo(r.width()/2-arrowWidth/2, r.height()-arrowHeight);
-        path.lineTo(r.width()/2, r.height());
-        path.lineTo(r.width()/2+arrowWidth/2, r.height()-arrowHeight);
+        path.moveTo(r.left + r.width()/2-arrowWidth/2, r.top + r.height()-arrowHeight);
+        path.lineTo(r.left + r.width()/2, r.top + r.height());
+        path.lineTo(r.left + r.width()/2+arrowWidth/2, r.top + r.height()-arrowHeight);
 
         //go to bottom-right
-        path.lineTo(r.width()-radius, r.height()-arrowHeight);
+        path.lineTo(r.left + r.width()-radius, r.top + r.height()-arrowHeight);
 
         //bottom-right arc
-        path.arcTo(new RectF(r.width()-2*radius, r.height()-arrowHeight-2*radius, r.width(), r.height()-arrowHeight), 90, -90);
+        path.arcTo(new RectF(r.left + r.width()-2*radius, r.top + r.height()-arrowHeight-2*radius, r.left + r.width(), r.top + r.height()-arrowHeight), 90, -90);
 
         //go to upper-right
-        path.lineTo(r.width(), r.top + arrowHeight);
+        path.lineTo(r.left + r.width(), r.top + arrowHeight);
 
         //upper-right arc
-        path.arcTo(new RectF(r.width()-2*radius, r.top, r.right, r.top+2*radius), 0, -90);
+        path.arcTo(new RectF(r.left + r.width()-2*radius, r.top, r.right, r.top + 2*radius), 0, -90);
 
         //go to upper-left
-        path.lineTo(r.left+radius, r.top);
+        path.lineTo(r.left + radius, r.top);
 
         //upper-left arc
-        path.arcTo(new RectF(r.left, r.top, r.left+2*radius, r.top+2*radius), 270, -90);
+        path.arcTo(new RectF(r.left, r.top, r.left + 2*radius, r.top + 2*radius), 270, -90);
 
         //go to bottom-left
-        path.lineTo(r.left, r.height()-arrowHeight-radius);
+        path.lineTo(r.left, r.top + r.height()-arrowHeight-radius);
 
         //bottom-left arc
-        path.arcTo(new RectF(r.left, r.height()-arrowHeight-2*radius, r.left+2*radius, r.height()-arrowHeight), 180, -90);
+        path.arcTo(new RectF(r.left, r.top + r.height()-arrowHeight-2*radius, r.left + 2*radius, r.top + r.height()-arrowHeight), 180, -90);
 
         path.close();
 
@@ -150,10 +152,11 @@ public class ProgressDownload extends View {
     }
 
     private int calculatedeltaY() {
+        int wireTension = 12;
         if(mProgress <= 50) {
-            return  (mProgress * mWidth/6)/50;
+            return  (mProgress * mWidth/wireTension)/50;
         } else {
-            return  ((100-mProgress) * mWidth/6)/50;
+            return  ((100-mProgress) * mWidth/wireTension)/50;
         }
     }
 
