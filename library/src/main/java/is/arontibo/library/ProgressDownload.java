@@ -219,7 +219,7 @@ public class ProgressDownload extends View {
 
         mTarget = newProgress;
 
-        final ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
+        ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
         anim.setInterpolator(new DecelerateInterpolator());
         anim.setDuration(ANIMATION_DURATION_BASE);
         anim.start();
