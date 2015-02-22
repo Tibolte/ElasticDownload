@@ -1,6 +1,6 @@
 # We are not Gif makers, We are developers
-Recently me and my friend came across this cool downloading animation on Dribble: https://dribbble.com/shots/1887815-Download?list=users&offset=4
-We found it so cool that we decided to develop it for Android!
+Recently me and my friend came across this downloading animation on Dribble: https://dribbble.com/shots/1887815-Download?list=users&offset=4
+We found it so nice that we decided to develop it for Android!
 
 We implemented it with a custom view, playing with canvas rotation and path drawing.
 
