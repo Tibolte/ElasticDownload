@@ -207,9 +207,9 @@ public class ProgressDownload extends View {
     private float calculatedeltaY() {
         int wireTension = 15;
         if(mProgress <= 50) {
-            return  (mProgress * mWidth/wireTension)/50 + Math.abs((mTarget-getProgress())/wireTension);
+            return  (mProgress * mWidth/wireTension)/50 + Math.abs((mTarget-getProgress())/wireTension) + Math.abs(mBubbleAngle);
         } else {
-            return  ((100-mProgress) * mWidth/wireTension)/50 + Math.abs((mTarget-getProgress())/wireTension);
+            return  ((100-mProgress) * mWidth/wireTension)/50 + Math.abs((mTarget-getProgress())/wireTension) + Math.abs(mBubbleAngle);
         }
     }
 
