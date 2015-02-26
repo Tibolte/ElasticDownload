@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
             }
             mTimer = new Timer();
             ProgressTask task= new ProgressTask();
-            mTimer.schedule(task, 0, ProgressDownload.ANIMATION_DURATION_BASE);
+            mTimer.schedule(task, 0);
             return true;
         }
 
