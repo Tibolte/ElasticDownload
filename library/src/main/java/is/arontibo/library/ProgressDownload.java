@@ -94,8 +94,6 @@ public class ProgressDownload extends View {
                 mBubbleAngle = -20;
             }
             if(Math.abs(speed) < 1) {
-                //Log.d(LOG_TAG, "Decelleration");
-
                 mSpeedAngle -= mBubbleAngle/20;
                 mSpeedAngle *= .9f;
             }
@@ -222,8 +220,7 @@ public class ProgressDownload extends View {
 
         ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
         anim.setInterpolator(new DecelerateInterpolator());
-        //anim.setDuration(ANIMATION_DURATION_BASE);
-        anim.setDuration((long) (ANIMATION_DURATION_BASE+Math.abs(mTarget*10-getProgress()*10)));
+        anim.setDuration((long) (ANIMATION_DURATION_BASE+Math.abs(mTarget*10-getProgress()*10)/2));
         anim.start();
     }
 
