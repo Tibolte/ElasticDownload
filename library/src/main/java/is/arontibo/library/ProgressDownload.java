@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -21,7 +22,7 @@ public class ProgressDownload extends View {
 
     private static final String LOG_TAG = ProgressDownload.class.getSimpleName();
 
-    public static final long ANIMATION_DURATION_BASE = 1000;
+    public static final long ANIMATION_DURATION_BASE = 1250;
     private static final String BACKGROUND_COLOR = "#EC5745";
 
     private int mWidth, mHeight, bubbleAnchorX, bubbleAnchorY, mBubbleWidth, mBubbleHeight, mPadding;
@@ -93,8 +94,6 @@ public class ProgressDownload extends View {
                 mBubbleAngle = -20;
             }
             if(Math.abs(speed) < 1) {
-                Log.d(LOG_TAG, "Decelleration");
-
                 mSpeedAngle -= mBubbleAngle/20;
                 mSpeedAngle *= .9f;
             }
@@ -221,7 +220,7 @@ public class ProgressDownload extends View {
 
         ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
         anim.setInterpolator(new DecelerateInterpolator());
-        anim.setDuration(ANIMATION_DURATION_BASE);
+        anim.setDuration((long) (ANIMATION_DURATION_BASE+Math.abs(mTarget*10-getProgress()*10)/2));
         anim.start();
     }
 
