@@ -12,5 +12,11 @@
             android:strokeColor="@android:color/black"
             android:strokeWidth="5"
             android:pathData="@string/circle_data"/>
+        <path
+            android:name="arrow_bubble"
+            android:fillColor="@android:color/white"
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="2"
+            android:pathData="@string/arrow_data"/>
     </group>
 </vector>

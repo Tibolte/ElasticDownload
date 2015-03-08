@@ -7,7 +7,6 @@
         android:valueFrom="@string/circle_data"
         android:valueTo="@string/line_data"
         android:valueType="pathType"
-        android:interpolator="@android:anim/accelerate_interpolator"
-        />
+        android:interpolator="@android:anim/accelerate_interpolator"/>
 
 </set>
