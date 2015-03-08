@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <objectAnimator
+        android:duration="500"
+        android:propertyName="pathData"
+        android:valueFrom="@string/circle_data"
+        android:valueTo="@string/line_data"
+        android:valueType="pathType"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        />
+
+</set>
