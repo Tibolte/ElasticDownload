@@ -6,4 +6,8 @@
         android:name="circle_line"
         android:animation="@anim/morph_circle" />
 
+    <target
+        android:name="arrow_bubble"
+        android:animation="@anim/morph_arrow" />
+
 </animated-vector>

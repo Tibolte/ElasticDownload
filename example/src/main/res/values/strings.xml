@@ -3,7 +3,6 @@
 
     <string name="action_run_animation">Run animation</string>
     <string name="title_activity_vector_test">VectorTestActivity</string>
-
     <string name="action_settings">Settings</string>
 
     <!-- paths -->
@@ -15,19 +14,34 @@
                              C 125 250 125 250 250 250
                              M 250 250
                              C 375 250 375 250 450 250</string>
-    <string name="arrow_data">M 225 200
-                              L 275 200
-                              Q 280 200 280 205
-                              L 280 270
-                              Q 280 275 285 275
-                              L 300 275
-                              Q 310 275 305 280
-                              L 255 320
-                              Q 250 325 245 320
-                              L 195 280
-                              Q 190 275 200 275
-                              L 215 275
-                              Q 220 275 220 270
-                              L 220 205
-                              Q 220 200 225 200</string>
+    <string name="arrow_data">M 225 190
+                              L 275 190
+                              Q 280 190 280 195
+                              L 280 260
+                              Q 280 265 285 265
+                              L 300 265
+                              Q 310 265 305 270
+                              L 255 310
+                              Q 250 315 245 310
+                              L 195 270
+                              Q 190 265 200 265
+                              L 215 265
+                              Q 220 265 220 260
+                              L 220 195
+                              Q 220 190 225 190</string>
+    <string name="bubble_data">M 27 200
+                               L 75 200
+                               Q 77 200 77 202
+                               L 77 230
+                               Q 77 232 75 232
+                               L 62 232
+                               Q 60 232 60 234
+                               L 52 248
+                               Q 50 250 48 248
+                               L 42 234
+                               Q 42 232 40 232
+                               L 27 232
+                               Q 25 232 25 230
+                               L 25 202
+                               Q 25 200 27 200</string>
 </resources>

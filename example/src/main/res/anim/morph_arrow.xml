@@ -4,9 +4,9 @@
     <objectAnimator
         android:duration="600"
         android:propertyName="pathData"
-        android:valueFrom="@string/circle_data"
-        android:valueTo="@string/line_data"
+        android:valueFrom="@string/arrow_data"
+        android:valueTo="@string/bubble_data"
         android:valueType="pathType"
-        android:interpolator="@android:anim/accelerate_interpolator"/>
+        android:interpolator="@android:anim/anticipate_interpolator"/>
 
 </set>
