@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".VectorTestActivity"
+            android:label="@string/title_activity_vector_test" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,19 +1,21 @@
 package is.arontibo.sample;
 
-import android.animation.ObjectAnimator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.LinearInterpolator;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import is.arontibo.library.ProgressDownload;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import is.arontibo.library.ElasticDownloadView;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    @InjectView(R.id.elastic_download_view) ElasticDownloadView mElasticDownloadView;
 
     private Timer mTimer;
 
@@ -21,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
     }
 
 
@@ -40,12 +43,15 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_run_animation) {
-            if(mTimer != null) {
+            /*if(mTimer != null) {
                 mTimer.cancel();
             }
             mTimer = new Timer();
             ProgressTask task= new ProgressTask();
-            mTimer.schedule(task, 0);
+            mTimer.schedule(task, 0);*/
+
+            mElasticDownloadView.startIntro();
+
             return true;
         }
 
@@ -57,15 +63,15 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void run() {
 
-            runOnUiThread(new Runnable() {
+            /*runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     int percentage = (int) Math.floor(Math.random()*100);
 
-                    ProgressDownload progressDownload = (ProgressDownload) findViewById(R.id.progress_download);
-                    progressDownload.setPercentage(percentage);
+                    ProgressDownloadView progressDownloadView = (ProgressDownloadView) findViewById(R.id.progress_download);
+                    progressDownloadView.setPercentage(percentage);
                 }
-            });
+            });*/
 
         }
 

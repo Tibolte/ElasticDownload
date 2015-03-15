@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <is.arontibo.library.ProgressDownloadView
+        android:id="@+id/progress_download_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <is.arontibo.library.IntroView
+        android:id="@+id/intro_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</merge>

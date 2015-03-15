@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <objectAnimator
+        android:duration="600"
+        android:propertyName="pathData"
+        android:valueFrom="@string/arrow_data"
+        android:valueTo="@string/bubble_data"
+        android:valueType="pathType"
+        android:interpolator="@android:anim/anticipate_interpolator"/>
+
+</set>
