@@ -1,14 +1,21 @@
 package is.arontibo.library;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.Gallery;
 
 /**
  * Created by thibaultguegan on 15/03/15.
  */
 public class ElasticDownloadView extends FrameLayout {
+
+    private static final String LOG_TAG = ElasticDownloadView.class.getSimpleName();
 
     private IntroView mIntroView;
     private ProgressDownloadView mProgressDownloadView;
@@ -35,6 +42,15 @@ public class ElasticDownloadView extends FrameLayout {
 
         mIntroView = (IntroView) findViewById(R.id.intro_view);
         mProgressDownloadView = (ProgressDownloadView) findViewById(R.id.progress_download_view);
+
+        ViewTreeObserver vto = mProgressDownloadView.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mProgressDownloadView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                Drawable drawable = mIntroView.getDrawable();
+            }
+        });
     }
 
     /**
