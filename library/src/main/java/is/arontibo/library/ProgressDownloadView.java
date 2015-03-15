@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -18,9 +17,9 @@ import android.view.animation.DecelerateInterpolator;
 /**
  * Created by thibaultguegan on 15/02/15.
  */
-public class ProgressDownload extends View {
+public class ProgressDownloadView extends View {
 
-    private static final String LOG_TAG = ProgressDownload.class.getSimpleName();
+    private static final String LOG_TAG = ProgressDownloadView.class.getSimpleName();
 
     public static final long ANIMATION_DURATION_BASE = 1250;
     private static final String BACKGROUND_COLOR = "#EC5745";
@@ -35,7 +34,7 @@ public class ProgressDownload extends View {
      * MARK: Constructor
      */
 
-    public ProgressDownload(Context context, AttributeSet attrs) {
+    public ProgressDownloadView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setBackgroundColor(Color.parseColor(BACKGROUND_COLOR));
