@@ -48,7 +48,8 @@ public class ElasticDownloadView extends FrameLayout {
             @Override
             public void onGlobalLayout() {
                 mProgressDownloadView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                Drawable drawable = mIntroView.getDrawable();
+                mIntroView.getLayoutParams().width = mProgressDownloadView.getWidth();
+                mIntroView.getLayoutParams().height = mProgressDownloadView.getHeight();
             }
         });
     }
