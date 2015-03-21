@@ -29,6 +29,7 @@ public class ProgressDownloadView extends View {
     private Paint mPaintBlack, mPaintWhite, mPaintBubble, mPaintText;
     private float mDensity = getResources().getDisplayMetrics().density;
     private float mProgress = 0, mTarget = 0, mSpeedAngle = 0, mBubbleAngle = 0;
+    private boolean failed;
 
     /**
      * MARK: Constructor
@@ -85,6 +86,7 @@ public class ProgressDownloadView extends View {
             //save and restore prevent the rest of the canvas to not be rotated
             canvas.save();
             float speed = (getProgress() - mTarget)/20;
+            float failAngle = failed ? 180 : 0;
             mBubbleAngle += speed*10;
             if(mBubbleAngle > 20) {
                 mBubbleAngle = 20;
@@ -98,7 +100,7 @@ public class ProgressDownloadView extends View {
             }
             mBubbleAngle += mSpeedAngle;
 
-            canvas.rotate(mBubbleAngle, bubbleAnchorX, bubbleAnchorY);
+            canvas.rotate(mBubbleAngle + failAngle, bubbleAnchorX, bubbleAnchorY);
             canvas.drawPath(mPathBubble, mPaintBubble);
             canvas.drawText(String.valueOf((int) mProgress) + " %", textX, textY, mPaintText);
             canvas.restore();
@@ -234,5 +236,14 @@ public class ProgressDownloadView extends View {
 
     public float getProgress() {
         return mProgress;
+    }
+
+    public void drawFail() {
+        failed = true;
+
+        ObjectAnimator failAnim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
+        failAnim.setInterpolator(new DecelerateInterpolator());
+        failAnim.setDuration((long) (ANIMATION_DURATION_BASE+Math.abs(mTarget*10-getProgress()*10)/2));
+        failAnim.start();
     }
 }
