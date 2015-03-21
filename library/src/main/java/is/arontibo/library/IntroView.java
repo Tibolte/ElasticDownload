@@ -61,9 +61,6 @@ public class IntroView extends ImageView {
         };
 
         AVDWrapper wrapper = new AVDWrapper(animatable, new Handler(), callback);
-        wrapper.start(600);
-
-        /*if (drawable instanceof Animatable)
-            ((Animatable) drawable).start();*/
+        wrapper.start(getContext().getResources().getInteger(R.integer.enter_animation_duration));
     }
 }
