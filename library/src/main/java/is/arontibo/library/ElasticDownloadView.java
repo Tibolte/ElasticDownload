@@ -1,5 +1,6 @@
 package is.arontibo.library;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -10,10 +11,13 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.Gallery;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by thibaultguegan on 15/03/15.
  */
-public class ElasticDownloadView extends FrameLayout {
+public class ElasticDownloadView extends FrameLayout implements IntroView.EnterAnimationListener{
 
     private static final String LOG_TAG = ElasticDownloadView.class.getSimpleName();
 
@@ -41,6 +45,7 @@ public class ElasticDownloadView extends FrameLayout {
         super.onFinishInflate();
 
         mIntroView = (IntroView) findViewById(R.id.intro_view);
+        mIntroView.setListener(this);
         mProgressDownloadView = (ProgressDownloadView) findViewById(R.id.progress_download_view);
 
         ViewTreeObserver vto = mProgressDownloadView.getViewTreeObserver();
@@ -60,5 +65,39 @@ public class ElasticDownloadView extends FrameLayout {
 
     public void startIntro() {
         mIntroView.startAnimation();
+    }
+
+
+    /**
+     * MARK: Enter animation overrides
+     */
+
+    @Override
+    public void onEnterAnimationFinished() {
+        mIntroView.setVisibility(INVISIBLE);
+        mProgressDownloadView.setVisibility(VISIBLE);
+        mProgressDownloadView.setProgress(mProgressDownloadView.getProgress());
+
+        //temporary example
+        Timer timer = new Timer();
+        ProgressTask task= new ProgressTask();
+        timer.schedule(task, 0, ProgressDownloadView.ANIMATION_DURATION_BASE);
+    }
+
+    class ProgressTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            ((Activity) getContext()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    int percentage = (int) Math.floor(Math.random() * 100);
+                    mProgressDownloadView.setPercentage(percentage);
+                }
+            });
+
+        }
+
     }
 }
