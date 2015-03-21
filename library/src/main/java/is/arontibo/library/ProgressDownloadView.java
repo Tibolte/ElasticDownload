@@ -112,7 +112,8 @@ public class ProgressDownloadView extends View {
         mHeight = yNew;
         Log.d(LOG_TAG, String.format("width and height measured are %d and %d", mWidth, mHeight));
 
-        setPercentage(mProgress);
+        //TODO: call this when the enter animation has just finished
+        //setPercentage(mProgress);
     }
 
     /**

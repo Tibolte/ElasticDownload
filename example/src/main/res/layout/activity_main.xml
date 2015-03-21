@@ -6,6 +6,7 @@
     <is.arontibo.library.ElasticDownloadView
         android:id="@+id/elastic_download_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

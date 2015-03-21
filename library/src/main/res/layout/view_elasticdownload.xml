@@ -3,8 +3,8 @@
 
     <is.arontibo.library.ProgressDownloadView
         android:id="@+id/progress_download_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="330dp"
+        android:layout_height="330dp"/>
 
     <is.arontibo.library.IntroView
         android:id="@+id/intro_view"
