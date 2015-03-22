@@ -3,6 +3,7 @@ package is.arontibo.library;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,8 +64,12 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
      * MARK: Public methods
      */
 
-    public void startIntro() {
+    public void startWithIntro() {
         mIntroView.startAnimation();
+    }
+
+    public void fail() {
+        mProgressDownloadView.drawFail();
     }
 
 
@@ -81,8 +86,19 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         //temporary example
         Timer timer = new Timer();
         ProgressTask task= new ProgressTask();
-        timer.schedule(task, 0, ProgressDownloadView.ANIMATION_DURATION_BASE);
+        timer.schedule(task, ProgressDownloadView.ANIMATION_DURATION_BASE);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fail();
+            }
+        }, 2*ProgressDownloadView.ANIMATION_DURATION_BASE);
     }
+
+    /**
+     * MARK: Functions to illustrate behaviour
+     */
 
     class ProgressTask extends TimerTask {
 
@@ -99,5 +115,13 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
 
         }
 
+    }
+
+    class FailTask extends TimerTask {
+
+        @Override
+        public void run() {
+            fail();
+        }
     }
 }

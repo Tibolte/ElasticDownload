@@ -2,7 +2,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <objectAnimator
-        android:duration="600"
+        android:duration="@integer/enter_animation_duration"
         android:propertyName="pathData"
         android:valueFrom="@string/circle_data"
         android:valueTo="@string/line_data"

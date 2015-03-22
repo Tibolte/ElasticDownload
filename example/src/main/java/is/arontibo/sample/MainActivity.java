@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
             ProgressTask task= new ProgressTask();
             mTimer.schedule(task, 0);*/
 
-            mElasticDownloadView.startIntro();
+            mElasticDownloadView.startWithIntro();
 
             return true;
         }
