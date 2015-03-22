@@ -13,7 +13,10 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
@@ -25,7 +28,6 @@ public class ProgressDownloadView extends View {
     private static final String LOG_TAG = ProgressDownloadView.class.getSimpleName();
 
     public static final long ANIMATION_DURATION_BASE = 1250;
-    private static final String BACKGROUND_COLOR = "#EC5745";
 
     private int mWidth, mHeight, bubbleAnchorX, bubbleAnchorY, mBubbleWidth, mBubbleHeight, mPadding;
     private Path mPathBlack, mPathWhite, mPathBubble;
@@ -47,7 +49,7 @@ public class ProgressDownloadView extends View {
     public ProgressDownloadView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        setBackgroundColor(Color.parseColor(BACKGROUND_COLOR));
+        setBackgroundColor(getResources().getColor(R.color.orange_salmon));
         mPadding = (int) (30*mDensity);
         mBubbleWidth = (int) (45*mDensity);
         mBubbleHeight = (int) (35*mDensity);
@@ -57,7 +59,7 @@ public class ProgressDownloadView extends View {
         mPaintBlack = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintBlack.setStyle(Paint.Style.STROKE);
         mPaintBlack.setStrokeWidth(5*mDensity);
-        mPaintBlack.setColor(Color.BLACK);
+        mPaintBlack.setColor(getResources().getColor(R.color.red_wood));
         mPaintBlack.setStrokeCap(Paint.Cap.ROUND);
         mPaintBlack.setPathEffect(new CornerPathEffect(5*mDensity));
 
@@ -119,7 +121,10 @@ public class ProgressDownloadView extends View {
                     canvas.save();
                     canvas.rotate(mFailAngle, bubbleAnchorX, bubbleAnchorY);
                     canvas.drawPath(mPathBubble, mPaintBubble);
-                    canvas.drawText(String.valueOf((int) mProgress) + " %", textX, textY, mPaintText);
+                    canvas.rotate(mFailAngle, bubbleAnchorX, textY - mBubbleHeight / 7);
+                    mPaintText.setColor(getResources().getColor(R.color.red_wine));
+                    textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/2.5f), mProgress*mWidth/100-(int)(mBubbleWidth/2.5f));
+                    canvas.drawText(getResources().getString(R.string.failed), textX, textY, mPaintText);
                     canvas.restore();
                     break;
                 case STATE_SUCCESS:
@@ -280,7 +285,7 @@ public class ProgressDownloadView extends View {
         anim.setInterpolator(new AccelerateInterpolator());
 
         AnimatorSet set = new AnimatorSet();
-        set.setDuration(ANIMATION_DURATION_BASE/2);
+        set.setDuration((long) (ANIMATION_DURATION_BASE/1.7f));
         set.playTogether(
                 failAnim,
                 anim

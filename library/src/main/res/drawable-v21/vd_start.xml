@@ -8,8 +8,8 @@
     <group>
         <path
             android:name="circle_line"
-            android:fillColor="@android:color/black"
-            android:strokeColor="@android:color/black"
+            android:fillColor="@color/red_wood"
+            android:strokeColor="@color/red_wood"
             android:strokeWidth="5"
             android:pathData="@string/circle_data"/>
         <path
