@@ -280,7 +280,7 @@ public class ProgressDownloadView extends View {
         ObjectAnimator failAnim = ObjectAnimator.ofFloat(this, "failAngle", 0, 180);
         failAnim.setInterpolator(new OvershootInterpolator());
 
-        //This one doesn't do much actually, we just use to take advantage of associating two different interpolators
+        //This one doesn't do much actually, we just use it to take advantage of associating two different interpolators
         ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
         anim.setInterpolator(new AccelerateInterpolator());
 
