@@ -1,6 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_run_animation" android:title="@string/action_run_animation"
+    <item android:id="@+id/action_run_success_animation" android:title="@string/action_run_success_animation"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_run_fail_animation" android:title="@string/action_run_fail_animation"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

@@ -1,23 +1,20 @@
 package is.arontibo.sample;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import is.arontibo.library.ElasticDownloadView;
+import is.arontibo.library.ProgressDownloadView;
 
 
 public class MainActivity extends ActionBarActivity {
 
     @InjectView(R.id.elastic_download_view) ElasticDownloadView mElasticDownloadView;
-
-    private Timer mTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +39,45 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_run_animation) {
-            /*if(mTimer != null) {
-                mTimer.cancel();
-            }
-            mTimer = new Timer();
-            ProgressTask task= new ProgressTask();
-            mTimer.schedule(task, 0);*/
+        if (id == R.id.action_run_success_animation) {
 
-            mElasticDownloadView.startWithIntro();
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.startIntro();
+                }
+            });
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.success();
+                }
+            }, 2*ProgressDownloadView.ANIMATION_DURATION_BASE);
+
+            return true;
+        } else if (id == R.id.action_run_fail_animation) {
+
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.startIntro();
+                }
+            });
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.setProgress(45);
+                }
+            }, 2*ProgressDownloadView.ANIMATION_DURATION_BASE);
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.fail();
+                }
+            }, 3*ProgressDownloadView.ANIMATION_DURATION_BASE);
 
             return true;
         }
@@ -58,22 +85,4 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class ProgressTask extends TimerTask {
-
-        @Override
-        public void run() {
-
-            /*runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    int percentage = (int) Math.floor(Math.random()*100);
-
-                    ProgressDownloadView progressDownloadView = (ProgressDownloadView) findViewById(R.id.progress_download);
-                    progressDownloadView.setPercentage(percentage);
-                }
-            });*/
-
-        }
-
-    }
 }
