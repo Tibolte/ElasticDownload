@@ -1,11 +1,13 @@
 package is.arontibo.library;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -13,10 +15,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
@@ -33,7 +32,7 @@ public class ProgressDownloadView extends View {
     private Path mPathBlack, mPathWhite, mPathBubble;
     private Paint mPaintBlack, mPaintWhite, mPaintBubble, mPaintText;
     private float mDensity = getResources().getDisplayMetrics().density;
-    private float mProgress = 0, mTarget = 0, mSpeedAngle = 0, mBubbleAngle = 0, mFailAngle = 0;
+    private float mProgress = 0, mTarget = 0, mSpeedAngle = 0, mBubbleAngle = 0, mFailAngle = 0, mFlipFactor;
     private State mState = State.STATE_WORKING;
 
     private enum State {
@@ -128,6 +127,16 @@ public class ProgressDownloadView extends View {
                     canvas.restore();
                     break;
                 case STATE_SUCCESS:
+                    canvas.save();
+                    mPaintText.setColor(getResources().getColor(R.color.green_grass));
+                    textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/2.5f), mProgress*mWidth/100-(int)(mBubbleWidth/2.5f));
+                    Matrix flipMatrix = new Matrix();
+                    flipMatrix.setScale(mFlipFactor, 1, bubbleAnchorX, bubbleAnchorY);
+                    canvas.concat(flipMatrix);
+                    canvas.drawPath(mPathBubble, mPaintBubble);
+                    canvas.concat(flipMatrix);
+                    canvas.drawText(getResources().getString(R.string.done), textX, textY, mPaintText);
+                    canvas.restore();
                     break;
             }
 
@@ -270,6 +279,14 @@ public class ProgressDownloadView extends View {
         invalidate();
     }
 
+    public void setFlip(float flipValue) {
+        mFlipFactor = flipValue;
+        makePathBlack();
+        makePathWhite();
+        makePathBubble();
+        invalidate();
+    }
+
     public float getProgress() {
         return mProgress;
     }
@@ -291,6 +308,40 @@ public class ProgressDownloadView extends View {
                 anim
         );
         set.start();
+    }
 
+    public void drawSuccess() {
+        mTarget = 100;
+
+        final ObjectAnimator successAnim = ObjectAnimator.ofFloat(this, "flip", 1, -1);
+        successAnim.setInterpolator(new OvershootInterpolator());
+        successAnim.setDuration(ANIMATION_DURATION_BASE);
+
+        ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.setDuration((long) (ANIMATION_DURATION_BASE + Math.abs(mTarget * 10 - getProgress() * 10) / 2));
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mState = State.STATE_SUCCESS;
+                successAnim.start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        anim.start();
     }
 }

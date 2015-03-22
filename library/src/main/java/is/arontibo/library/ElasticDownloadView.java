@@ -2,15 +2,11 @@ package is.arontibo.library;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.Gallery;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -72,6 +68,10 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         mProgressDownloadView.drawFail();
     }
 
+    public void success() {
+        mProgressDownloadView.drawSuccess();
+    }
+
 
     /**
      * MARK: Enter animation overrides
@@ -91,7 +91,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                fail();
+                success();
             }
         }, 2*ProgressDownloadView.ANIMATION_DURATION_BASE);
     }
