@@ -1,5 +1,6 @@
 package is.arontibo.library;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,7 +13,9 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 /**
  * Created by thibaultguegan on 15/02/15.
@@ -28,8 +31,14 @@ public class ProgressDownloadView extends View {
     private Path mPathBlack, mPathWhite, mPathBubble;
     private Paint mPaintBlack, mPaintWhite, mPaintBubble, mPaintText;
     private float mDensity = getResources().getDisplayMetrics().density;
-    private float mProgress = 0, mTarget = 0, mSpeedAngle = 0, mBubbleAngle = 0;
-    private boolean failed;
+    private float mProgress = 0, mTarget = 0, mSpeedAngle = 0, mBubbleAngle = 0, mFailAngle = 0;
+    private State mState = State.STATE_WORKING;
+
+    private enum State {
+        STATE_WORKING,
+        STATE_FAILED,
+        STATE_SUCCESS
+    }
 
     /**
      * MARK: Constructor
@@ -81,29 +90,42 @@ public class ProgressDownloadView extends View {
             canvas.drawPath(mPathWhite, mPaintWhite);
 
             float textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/3.2f), mProgress*mWidth/100-(int)(mBubbleWidth/3.2f));
-            float textY = mHeight/2-mBubbleHeight/2 + calculatedeltaY();
+            float textY = mHeight/2-mBubbleHeight/2 + calculateDeltaY();
 
-            //save and restore prevent the rest of the canvas to not be rotated
-            canvas.save();
-            float speed = (getProgress() - mTarget)/20;
-            float failAngle = failed ? 180 : 0;
-            mBubbleAngle += speed*10;
-            if(mBubbleAngle > 20) {
-                mBubbleAngle = 20;
-            }
-            if(mBubbleAngle < -20) {
-                mBubbleAngle = -20;
-            }
-            if(Math.abs(speed) < 1) {
-                mSpeedAngle -= mBubbleAngle/20;
-                mSpeedAngle *= .9f;
-            }
-            mBubbleAngle += mSpeedAngle;
+            switch (mState) {
+                case STATE_WORKING:
+                    //save and restore prevent the rest of the canvas to not be rotated
+                    canvas.save();
+                    float speed = (getProgress() - mTarget)/20;
+                    mBubbleAngle += speed*10;
+                    if(mBubbleAngle > 20) {
+                        mBubbleAngle = 20;
+                    }
+                    if(mBubbleAngle < -20) {
+                        mBubbleAngle = -20;
+                    }
+                    if(Math.abs(speed) < 1) {
+                        mSpeedAngle -= mBubbleAngle/20;
+                        mSpeedAngle *= .9f;
+                    }
+                    mBubbleAngle += mSpeedAngle;
 
-            canvas.rotate(mBubbleAngle + failAngle, bubbleAnchorX, bubbleAnchorY);
-            canvas.drawPath(mPathBubble, mPaintBubble);
-            canvas.drawText(String.valueOf((int) mProgress) + " %", textX, textY, mPaintText);
-            canvas.restore();
+                    canvas.rotate(mBubbleAngle, bubbleAnchorX, bubbleAnchorY);
+                    canvas.drawPath(mPathBubble, mPaintBubble);
+                    canvas.drawText(String.valueOf((int) mProgress) + " %", textX, textY, mPaintText);
+                    canvas.restore();
+                    break;
+                case STATE_FAILED:
+                    canvas.save();
+                    canvas.rotate(mFailAngle, bubbleAnchorX, bubbleAnchorY);
+                    canvas.drawPath(mPathBubble, mPaintBubble);
+                    canvas.drawText(String.valueOf((int) mProgress) + " %", textX, textY, mPaintText);
+                    canvas.restore();
+                    break;
+                case STATE_SUCCESS:
+                    break;
+            }
+
         }
     }
 
@@ -129,7 +151,7 @@ public class ProgressDownloadView extends View {
         }
 
         Path p =  new Path();
-        p.moveTo(Math.max(getPaddingLeft(), mProgress*mWidth/100), mHeight/2 + calculatedeltaY());
+        p.moveTo(Math.max(getPaddingLeft(), mProgress*mWidth/100), mHeight/2 + calculateDeltaY());
         p.lineTo(mWidth, mHeight/2);
 
         mPathBlack.set(p);
@@ -143,7 +165,7 @@ public class ProgressDownloadView extends View {
 
         Path p = new Path();
         p.moveTo(getPaddingLeft(), mHeight / 2);
-        p.lineTo(Math.max(getPaddingLeft(), mProgress * mWidth / 100), mHeight / 2 + calculatedeltaY());
+        p.lineTo(Math.max(getPaddingLeft(), mProgress * mWidth / 100), mHeight / 2 + calculateDeltaY());
 
         mPathWhite.set(p);
     }
@@ -159,7 +181,7 @@ public class ProgressDownloadView extends View {
         int arrowWidth = width/3;
 
         //Rect r = new Rect(Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4), mHeight/2-height + calculatedeltaY(), Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4), mHeight/2+height-height + calculatedeltaY());
-        Rect r = new Rect((int) (Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4)), (int) (mHeight/2-height + calculatedeltaY()), (int) (Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4)), (int) (mHeight/2+height-height + calculatedeltaY()));
+        Rect r = new Rect((int) (Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4)), (int) (mHeight/2-height + calculateDeltaY()), (int) (Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4)), (int) (mHeight/2+height-height + calculateDeltaY()));
         int arrowHeight = (int) (arrowWidth/1.5f);
         int radius = 8;
 
@@ -205,7 +227,7 @@ public class ProgressDownloadView extends View {
      * MARK: Animation functions
      */
 
-    private float calculatedeltaY() {
+    private float calculateDeltaY() {
         int wireTension = 15;
         if(mProgress <= 50) {
             return  (mProgress * mWidth/wireTension)/50 + Math.abs((mTarget-getProgress())/wireTension) + Math.abs(mBubbleAngle);
@@ -218,6 +240,7 @@ public class ProgressDownloadView extends View {
         if(newProgress < 0 || newProgress > 100)
             throw new IllegalArgumentException("setPercentage not between 0 and 100");
 
+        mState = State.STATE_WORKING;
         mTarget = newProgress;
 
         ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
@@ -234,16 +257,35 @@ public class ProgressDownloadView extends View {
         invalidate();
     }
 
+    public void setFailAngle(float failAngle) {
+        mFailAngle = failAngle;
+        makePathBlack();
+        makePathWhite();
+        makePathBubble();
+        invalidate();
+    }
+
     public float getProgress() {
         return mProgress;
     }
 
     public void drawFail() {
-        failed = true;
+        mState = State.STATE_FAILED;
 
-        ObjectAnimator failAnim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
-        failAnim.setInterpolator(new DecelerateInterpolator());
-        failAnim.setDuration((long) (ANIMATION_DURATION_BASE+Math.abs(mTarget*10-getProgress()*10)/2));
-        failAnim.start();
+        ObjectAnimator failAnim = ObjectAnimator.ofFloat(this, "failAngle", 0, 180);
+        failAnim.setInterpolator(new OvershootInterpolator());
+
+        //This one doesn't do much actually, we just use to take advantage of associating two different interpolators
+        ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
+        anim.setInterpolator(new AccelerateInterpolator());
+
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(ANIMATION_DURATION_BASE/2);
+        set.playTogether(
+                failAnim,
+                anim
+        );
+        set.start();
+
     }
 }

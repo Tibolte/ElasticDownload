@@ -64,7 +64,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
      * MARK: Public methods
      */
 
-    public void startIntro() {
+    public void startWithIntro() {
         mIntroView.startAnimation();
     }
 
