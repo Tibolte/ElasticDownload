@@ -1,15 +1,10 @@
 package is.arontibo.library;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by thibaultguegan on 15/03/15.
@@ -60,16 +55,20 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
      * MARK: Public methods
      */
 
-    public void startWithIntro() {
+    public void startIntro() {
         mIntroView.startAnimation();
     }
 
-    public void fail() {
-        mProgressDownloadView.drawFail();
+    public void setProgress(float progress) {
+        mProgressDownloadView.setPercentage(progress);
     }
 
     public void success() {
         mProgressDownloadView.drawSuccess();
+    }
+
+    public void fail() {
+        mProgressDownloadView.drawFail();
     }
 
 
@@ -83,45 +82,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         mProgressDownloadView.setVisibility(VISIBLE);
         mProgressDownloadView.setProgress(mProgressDownloadView.getProgress());
 
-        //temporary example
-        Timer timer = new Timer();
-        ProgressTask task= new ProgressTask();
-        timer.schedule(task, ProgressDownloadView.ANIMATION_DURATION_BASE);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                success();
-            }
-        }, 2*ProgressDownloadView.ANIMATION_DURATION_BASE);
+        //do further actions if necessary
     }
 
-    /**
-     * MARK: Functions to illustrate behaviour
-     */
-
-    class ProgressTask extends TimerTask {
-
-        @Override
-        public void run() {
-
-            ((Activity) getContext()).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    int percentage = (int) Math.floor(Math.random() * 100);
-                    mProgressDownloadView.setPercentage(percentage);
-                }
-            });
-
-        }
-
-    }
-
-    class FailTask extends TimerTask {
-
-        @Override
-        public void run() {
-            fail();
-        }
-    }
 }
