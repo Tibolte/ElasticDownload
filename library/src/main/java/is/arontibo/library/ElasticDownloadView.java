@@ -72,6 +72,10 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         mProgressDownloadView.drawFail();
     }
 
+    public void success() {
+        mProgressDownloadView.drawSuccess();
+    }
+
 
     /**
      * MARK: Enter animation overrides
@@ -91,7 +95,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                fail();
+                success();
             }
         }, 2*ProgressDownloadView.ANIMATION_DURATION_BASE);
     }

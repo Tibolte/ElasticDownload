@@ -13,10 +13,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
@@ -291,6 +288,14 @@ public class ProgressDownloadView extends View {
                 anim
         );
         set.start();
+    }
 
+    public void drawSuccess() {
+        mTarget = 100;
+
+        ObjectAnimator anim = ObjectAnimator.ofFloat(this, "progress", getProgress(), mTarget);
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.setDuration((long) (ANIMATION_DURATION_BASE+Math.abs(mTarget*10-getProgress()*10)/2));
+        anim.start();
     }
 }
