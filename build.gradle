@@ -29,7 +29,7 @@ uploadArchives {
         pom.project {
             name 'ElasticDownload'
             packaging 'aar'
-            description 'An animated download view with some elasticity'
+            description 'An animated download view with some elasticity for Android'
             url 'https://github.com/Tibolte/ProgressDownload'
 
             scm {
@@ -48,7 +48,7 @@ uploadArchives {
 
             developers {
                 developer {
-                    id 'thg'
+                    id 'thibault.guegan'
                     name 'Thibault Guégan'
                     email 'thibault.guegan@gmail.com'
                 }
