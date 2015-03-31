@@ -60,14 +60,14 @@ public class ProgressDownloadView extends View {
         mPaintBlack.setStrokeWidth(5*mDensity);
         mPaintBlack.setColor(getResources().getColor(R.color.red_wood));
         mPaintBlack.setStrokeCap(Paint.Cap.ROUND);
-        mPaintBlack.setPathEffect(new CornerPathEffect(5*mDensity));
+        //mPaintBlack.setPathEffect(new CornerPathEffect(5*mDensity));
 
         mPaintWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintWhite.setStyle(Paint.Style.STROKE);
         mPaintWhite.setStrokeWidth(5*mDensity);
         mPaintWhite.setColor(Color.WHITE);
         mPaintWhite.setStrokeCap(Paint.Cap.ROUND);
-        mPaintWhite.setPathEffect(new CornerPathEffect(5*mDensity));
+        //mPaintWhite.setPathEffect(new CornerPathEffect(5*mDensity));
 
         mPaintBubble = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintBubble.setColor(Color.WHITE);
@@ -87,10 +87,7 @@ public class ProgressDownloadView extends View {
     protected void onDraw(Canvas canvas) {
         if(mPathWhite != null && mPathBlack != null) {
 
-            canvas.drawPath(mPathBlack, mPaintBlack);
-            canvas.drawPath(mPathWhite, mPaintWhite);
-
-            float textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/3.2f), mProgress*mWidth/100-(int)(mBubbleWidth/3.2f));
+            float textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/4.0f), mProgress*mWidth/100-(int)(mBubbleWidth/4.0f));
             float textY = mHeight/2-mBubbleHeight/2 + calculateDeltaY();
 
             switch (mState) {
@@ -122,14 +119,14 @@ public class ProgressDownloadView extends View {
                     canvas.drawPath(mPathBubble, mPaintBubble);
                     canvas.rotate(mFailAngle, bubbleAnchorX, textY - mBubbleHeight / 7);
                     mPaintText.setColor(getResources().getColor(R.color.red_wine));
-                    textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/2.5f), mProgress*mWidth/100-(int)(mBubbleWidth/2.5f));
+                    textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/3.2f), mProgress*mWidth/100-(int)(mBubbleWidth/3.2f));
                     canvas.drawText(getResources().getString(R.string.failed), textX, textY, mPaintText);
                     canvas.restore();
                     break;
                 case STATE_SUCCESS:
                     canvas.save();
                     mPaintText.setColor(getResources().getColor(R.color.green_grass));
-                    textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/2.5f), mProgress*mWidth/100-(int)(mBubbleWidth/2.5f));
+                    textX = Math.max(getPaddingLeft()-(int)(mBubbleWidth/3.2f), mProgress*mWidth/100-(int)(mBubbleWidth/3.2f));
                     Matrix flipMatrix = new Matrix();
                     flipMatrix.setScale(mFlipFactor, 1, bubbleAnchorX, bubbleAnchorY);
                     canvas.concat(flipMatrix);
@@ -140,6 +137,8 @@ public class ProgressDownloadView extends View {
                     break;
             }
 
+            canvas.drawPath(mPathBlack, mPaintBlack);
+            canvas.drawPath(mPathWhite, mPaintWhite);
         }
     }
 
@@ -195,7 +194,7 @@ public class ProgressDownloadView extends View {
         int arrowWidth = width/3;
 
         //Rect r = new Rect(Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4), mHeight/2-height + calculatedeltaY(), Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4), mHeight/2+height-height + calculatedeltaY());
-        Rect r = new Rect((int) (Math.max(getPaddingLeft()-width/2-arrowWidth/4, mProgress*mWidth/100-width/2-arrowWidth/4)), (int) (mHeight/2-height + calculateDeltaY()), (int) (Math.max(getPaddingLeft()+width/2-arrowWidth/4, mProgress*mWidth/100+width/2-arrowWidth/4)), (int) (mHeight/2+height-height + calculateDeltaY()));
+        Rect r = new Rect((int) (Math.max(getPaddingLeft()-width/2, mProgress*mWidth/100-width/2)), (int) (mHeight/2-height + calculateDeltaY()), (int) (Math.max(getPaddingLeft()+width/2, mProgress*mWidth/100+width/2)), (int) (mHeight/2+height-height + calculateDeltaY()));
         int arrowHeight = (int) (arrowWidth/1.5f);
         int radius = 8;
 
