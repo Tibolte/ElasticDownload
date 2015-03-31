@@ -30,12 +30,12 @@ uploadArchives {
             name 'ElasticDownload'
             packaging 'aar'
             description 'An animated download view with some elasticity for Android'
-            url 'https://github.com/Tibolte/ProgressDownload'
+            url 'https://github.com/Tibolte/ElasticDownload'
 
             scm {
-                url 'scm:git@github.com:Tibolte/ProgressDownload.git'
-                connection 'scm:git@github.com:Tibolte/ProgressDownload.git'
-                developerConnection 'scm:git@github.com:Tibolte/ProgressDownload.git'
+                url 'scm:git@github.com:Tibolte/ElasticDownload.git'
+                connection 'scm:git@github.com:Tibolte/ElasticDownload.git'
+                developerConnection 'scm:git@github.com:Tibolte/ElasticDownload.git'
             }
 
             licenses {
