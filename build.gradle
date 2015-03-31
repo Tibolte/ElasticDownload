@@ -1,4 +1,61 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+version = elasticLibraryVersionName  // set in gradle.properties in project root
+group = "is.arontibo"
+
+configurations {
+    archives {
+        extendsFrom configurations.default
+    }
+}
+
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: sonatypeRepo) {
+            authentication(userName: sonatypeUsername,
+                    password: sonatypePassword)
+        }
+
+        pom.project {
+            name 'ElasticDownload'
+            packaging 'aar'
+            description 'An animated download view with some elasticity'
+            url 'https://github.com/Tibolte/ProgressDownload'
+
+            scm {
+                url 'scm:git@github.com:Tibolte/ProgressDownload.git'
+                connection 'scm:git@github.com:Tibolte/ProgressDownload.git'
+                developerConnection 'scm:git@github.com:Tibolte/ProgressDownload.git'
+            }
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'thg'
+                    name 'Thibault Guégan'
+                    email 'thibault.guegan@gmail.com'
+                }
+            }
+        }
+    }
+}
 
 buildscript {
     repositories {
