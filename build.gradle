@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 version = elasticLibraryVersionName  // set in gradle.properties in project root
-group = "is.arontibo"
+group = "com.github.tibolte"
 
 configurations {
     archives {
