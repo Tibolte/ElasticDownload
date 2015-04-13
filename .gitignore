@@ -19,6 +19,9 @@ build/
 # Local configuration file (sdk path, etc)
 local.properties
 
+# Upload info
+gradle.properties
+
 # Android Studio project files
 *.iml
 .classpath
