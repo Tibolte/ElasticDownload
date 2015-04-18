@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+/*apply plugin: 'maven'
 apply plugin: 'signing'
 
 version = elasticLibraryVersionName  // set in gradle.properties in project root
@@ -62,7 +62,7 @@ uploadArchives {
             }
         }
     }
-}
+}*/
 
 
 android {
@@ -82,6 +82,8 @@ android {
         }
     }
 }
+
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
