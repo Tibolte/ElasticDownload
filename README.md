@@ -7,6 +7,41 @@ We implemented it with a custom view, playing with canvas rotation and path draw
 ![](https://raw.githubusercontent.com/Tibolte/ElasticDownload/master/success.gif)
 ![](https://raw.githubusercontent.com/Tibolte/ElasticDownload/master/fail.gif)
 
+Usage
+===============================
+
+Declare this view in your layout like below, it's also possible to inflate it manually.
+
+```java
+    <is.arontibo.library.ElasticDownloadView
+        android:id="@+id/elastic_download_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+````
+
+At first, call startIntro() to make the view be able to display any percentage:
+
+```java
+    @InjectView(R.id.elastic_download_view) ElasticDownloadView mElasticDownloadView;
+    
+    mElasticDownloadView.startIntro();
+````
+
+Set any progress:
+
+```java
+    mElasticDownloadView.setProgress(25);
+````
+
+Notify if the download has failed or not:
+
+```java
+    mElasticDownloadView.success(); //This function moves the cursor to 100 if the progress has not been set already
+    
+    mElasticDownloadView.fail();
+````
+
 # Participating?
 Make you pull requests on feature or bugfix branches.
 
