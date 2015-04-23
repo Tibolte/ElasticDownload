@@ -10,6 +10,13 @@ We implemented it with a custom view, playing with canvas rotation and path draw
 Usage
 ===============================
 
+Grab it from maven:
+
+```groovy
+    compile 'com.github.tibolte:elasticdownload:1.0.1'
+````
+
+
 Declare this view in your layout like below, it's also possible to inflate it manually.
 
 ```java
