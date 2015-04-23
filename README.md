@@ -50,7 +50,7 @@ Notify if the download has failed or not:
 ````
 
 # Participating?
-Make you pull requests on feature or bugfix branches.
+Make your pull requests on feature or bugfix branches.
 
 License
 -----------
