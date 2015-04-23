@@ -4,6 +4,9 @@ We found it so nice that we decided to develop it for Android!
 
 We implemented it with a custom view, playing with canvas rotation and path drawing.
 
+![](https://raw.githubusercontent.com/Tibolte/ElasticDownload/master/success.gif)
+![](https://raw.githubusercontent.com/Tibolte/ElasticDownload/master/fail.gif)
+
 # Participating?
 Make you pull requests on feature or bugfix branches.
 
