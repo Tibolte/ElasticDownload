@@ -1,6 +1,7 @@
 package is.arontibo.library;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewTreeObserver;
@@ -15,6 +16,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
 
     private IntroView mIntroView;
     private ProgressDownloadView mProgressDownloadView;
+    private int mBackgroundColor;
 
     /**
      * MARK: Constructor
@@ -22,6 +24,11 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
 
     public ElasticDownloadView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.ColorOptionsView, 0, 0);
+        mBackgroundColor = a.getColor(R.styleable.ColorOptionsView_backgroundColor,
+                R.color.orange_salmon);
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -47,6 +54,8 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
                 mProgressDownloadView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 mIntroView.getLayoutParams().width = mProgressDownloadView.getWidth();
                 mIntroView.getLayoutParams().height = mProgressDownloadView.getHeight();
+
+                mProgressDownloadView.setBackgroundColor(mBackgroundColor);
             }
         });
     }

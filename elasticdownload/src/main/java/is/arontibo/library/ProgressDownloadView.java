@@ -48,7 +48,6 @@ public class ProgressDownloadView extends View {
     public ProgressDownloadView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        setBackgroundColor(getResources().getColor(R.color.orange_salmon));
         mPadding = (int) (30*mDensity);
         mBubbleWidth = (int) (45*mDensity);
         mBubbleHeight = (int) (35*mDensity);
