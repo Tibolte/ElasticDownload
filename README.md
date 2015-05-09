@@ -16,7 +16,7 @@ Usage
 Grab it from maven:
 
 ```groovy
-    compile 'com.github.tibolte:elasticdownload:1.0.1'
+    compile 'com.github.tibolte:elasticdownload:1.0.+'
 ````
 
 
