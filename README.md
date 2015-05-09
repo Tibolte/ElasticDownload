@@ -1,5 +1,5 @@
 # We are not Gif makers, We are developers
-
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tibolte/elasticdownload/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tibolte/elasticdownload)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ElasticDownload-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1747)
 
 Recently me and my friend came across this downloading animation on Dribble: https://dribbble.com/shots/1887815-Download?list=users&offset=4
