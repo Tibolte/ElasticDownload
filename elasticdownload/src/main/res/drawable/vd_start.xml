@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:width="500dp"
+    android:height="500dp"
+    android:viewportWidth="500"
+    android:viewportHeight="500"
+    app:vc_viewportHeight="500"
+    app:vc_viewportWidth="500">
+
+    <group>
+        <path
+            android:name="circle_line"
+            android:fillColor="@color/red_wood"
+            android:strokeColor="@color/red_wood"
+            android:strokeWidth="5"
+            android:pathData="@string/circle_data"
+            app:vc_fillColor="@color/red_wood"
+            app:vc_strokeColor="@color/red_wood"
+            app:vc_strokeWidth="5"
+            app:vc_pathData="@string/circle_data"/>
+        <path
+            android:name="arrow_bubble"
+            android:fillColor="@android:color/white"
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="2"
+            android:pathData="@string/arrow_data"
+            app:vc_fillColor="@android:color/white"
+            app:vc_strokeColor="@android:color/white"
+            app:vc_strokeWidth="2"
+            app:vc_pathData="@string/arrow_data"/>
+    </group>
+</vector>

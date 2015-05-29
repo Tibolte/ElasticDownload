@@ -42,8 +42,7 @@ public class AVDWrapper {
         mDrawable.stop();
         mHandler.removeCallbacks(mAnimationDoneRunnable);
 
-        if (mCallback != null)
-            mCallback.onAnimationStopped();
+        if (mCallback != null) mCallback.onAnimationStopped();
     }
 
 }
