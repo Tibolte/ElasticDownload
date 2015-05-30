@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:duration="@integer/enter_animation_duration"
     android:interpolator="@android:anim/anticipate_interpolator"
-    android:propertyName="pathData"
-    android:valueFrom="@string/arrow_data"
-    android:valueTo="@string/bubble_data"
-    android:valueType="pathType"></objectAnimator>
+    app:vc_propertyName="pathData"
+    app:vc_valueFrom="@string/arrow_data"
+    app:vc_valueTo="@string/bubble_data"
+    app:vc_valueType="pathType">
+</objectAnimator>

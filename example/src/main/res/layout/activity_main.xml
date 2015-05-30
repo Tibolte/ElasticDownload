@@ -9,7 +9,7 @@
         android:id="@+id/elastic_download_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        elastic:backgroundColor="@android:color/holo_blue_dark"
+        elastic:backgroundColor="#00796B"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>

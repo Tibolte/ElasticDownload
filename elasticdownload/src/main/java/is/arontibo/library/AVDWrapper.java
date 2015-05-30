@@ -15,13 +15,15 @@ public class AVDWrapper {
 
         @Override
         public void run() {
-            if (mCallback != null)
+            if (mCallback != null) {
                 mCallback.onAnimationDone();
+            }
         }
     };
 
     public interface Callback {
         public void onAnimationDone();
+
         public void onAnimationStopped();
     }
 
@@ -42,8 +44,7 @@ public class AVDWrapper {
         mDrawable.stop();
         mHandler.removeCallbacks(mAnimationDoneRunnable);
 
-        if (mCallback != null)
-            mCallback.onAnimationStopped();
+        if (mCallback != null) mCallback.onAnimationStopped();
     }
 
 }

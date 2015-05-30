@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:duration="@integer/enter_animation_duration"
     android:interpolator="@android:anim/accelerate_interpolator"
-    android:propertyName="pathData"
-    android:valueFrom="@string/circle_data"
-    android:valueTo="@string/line_data"
-    android:valueType="pathType"></objectAnimator>
+    app:vc_propertyName="pathData"
+    app:vc_valueFrom="@string/circle_data"
+    app:vc_valueTo="@string/line_data"
+    app:vc_valueType="pathType">
+</objectAnimator>

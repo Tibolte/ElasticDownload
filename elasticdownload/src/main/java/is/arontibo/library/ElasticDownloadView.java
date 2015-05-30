@@ -2,6 +2,7 @@ package is.arontibo.library;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewTreeObserver;
@@ -10,7 +11,7 @@ import android.widget.FrameLayout;
 /**
  * Created by thibaultguegan on 15/03/15.
  */
-public class ElasticDownloadView extends FrameLayout implements IntroView.EnterAnimationListener{
+public class ElasticDownloadView extends FrameLayout implements IntroView.EnterAnimationListener {
 
     private static final String LOG_TAG = ElasticDownloadView.class.getSimpleName();
 
@@ -51,7 +52,11 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mProgressDownloadView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    mProgressDownloadView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    mProgressDownloadView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
                 mIntroView.getLayoutParams().width = mProgressDownloadView.getWidth();
                 mIntroView.getLayoutParams().height = mProgressDownloadView.getHeight();
 

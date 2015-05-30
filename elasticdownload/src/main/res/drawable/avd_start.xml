@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/vd_start">
+
+    <target
+        android:name="circle_line"
+        android:animation="@anim/morph_circle" />
+
+    <target
+        android:name="arrow_bubble"
+        android:animation="@anim/morph_arrow" />
+
+</animated-vector>
