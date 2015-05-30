@@ -15,13 +15,9 @@ import android.support.annotation.NonNull;
  */
 public final class Outline {
 
-    /** @hide */
     public Path mPath;
-    /** @hide */
     public Rect mRect;
-    /** @hide */
     public float mRadius;
-    /** @hide */
     public float mAlpha;
 
     /**
@@ -67,7 +63,7 @@ public final class Outline {
      * Currently, only Outlines that can be represented as a rectangle, circle,
      * or round rect support clipping.
      *
-     * @see {@link android.view.View#setClipToOutline(boolean)}
+     * {@link android.view.View#setClipToOutline(boolean)}
      */
     public boolean canClip() {
         return !isEmpty() && mRect != null;

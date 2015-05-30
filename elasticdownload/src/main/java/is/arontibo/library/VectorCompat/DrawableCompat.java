@@ -92,7 +92,6 @@ public abstract class DrawableCompat extends Drawable {
      * Parses a {@link android.graphics.PorterDuff.Mode} from a tintMode
      * attribute's enum value.
      *
-     * @hide
      */
     public static PorterDuff.Mode parseTintMode(int value, PorterDuff.Mode defaultMode) {
         switch (value) {

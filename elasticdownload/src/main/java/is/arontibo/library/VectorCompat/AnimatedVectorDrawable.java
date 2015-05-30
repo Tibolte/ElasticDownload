@@ -389,7 +389,7 @@ public class AnimatedVectorDrawable extends DrawableCompat implements Animatable
 
     /**
      * Reverses ongoing animations or starts pending animations in reverse.
-     * <p/>
+     *
      * NOTE: Only works of all animations are ValueAnimators.
      */
     public void reverse() {
