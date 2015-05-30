@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.wnafee.vector.compat.AnimatedVectorDrawable;
+import is.arontibo.library.VectorCompat.AnimatedVectorDrawable;
 
 /**
  * Created by thibaultguegan on 15/03/15.
