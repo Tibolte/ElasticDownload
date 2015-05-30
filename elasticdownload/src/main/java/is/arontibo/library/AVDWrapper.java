@@ -15,8 +15,9 @@ public class AVDWrapper {
 
         @Override
         public void run() {
-            if (mCallback != null)
+            if (mCallback != null) {
                 mCallback.onAnimationDone();
+            }
         }
     };
 
