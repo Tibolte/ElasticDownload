@@ -31,7 +31,7 @@ import is.arontibo.library.R;
 
 public class AnimatedVectorDrawable extends DrawableCompat implements Animatable, Tintable {
 
-    private static final String LOGTAG = AnimatedVectorDrawable.class.getSimpleName();
+    private static final String LOG_TAG = AnimatedVectorDrawable.class.getSimpleName();
 
     private static final String ANIMATED_VECTOR = "animated-vector";
     private static final String TARGET = "target";
@@ -191,9 +191,9 @@ public class AnimatedVectorDrawable extends DrawableCompat implements Animatable
 
             return drawable;
         } catch (XmlPullParserException e) {
-            Log.e(LOGTAG, "parser error", e);
+            Log.e(LOG_TAG, "parser error", e);
         } catch (IOException e) {
-            Log.e(LOGTAG, "parser error", e);
+            Log.e(LOG_TAG, "parser error", e);
         }
         return null;
     }
@@ -335,7 +335,7 @@ public class AnimatedVectorDrawable extends DrawableCompat implements Animatable
         mAnimatedVectorState.mAnimators.add(animator);
         mAnimatedVectorState.mTargetNameMap.put(animator, name);
         if (DBG_ANIMATION_VECTOR_DRAWABLE) {
-            Log.v(LOGTAG, "add animator  for target " + name + " " + animator);
+            Log.v(LOG_TAG, "add animator  for target " + name + " " + animator);
         }
     }
 
@@ -400,7 +400,7 @@ public class AnimatedVectorDrawable extends DrawableCompat implements Animatable
             if (canReverse(animator)) {
                 reverse(animator);
             } else {
-                Log.w(LOGTAG, "AnimatedVectorDrawable can't reverse()");
+                Log.w(LOG_TAG, "AnimatedVectorDrawable can't reverse()");
             }
         }
     }

@@ -22,6 +22,7 @@ public class AVDWrapper {
 
     public interface Callback {
         public void onAnimationDone();
+
         public void onAnimationStopped();
     }
 

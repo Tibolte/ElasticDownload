@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import is.arontibo.library.R;
 
 public class PathAnimatorInflater {
-    private static final String TAG = "PathAnimatorInflater";
+
+    private static final String LOG_TAG = "PathAnimatorInflater";
     /**
      * These flags are used when parsing PathAnimatorSet objects
      */
@@ -253,9 +254,6 @@ public class PathAnimatorInflater {
         PathParser.PathDataNode[] nodesFrom = PathParser.createNodesFromPathData(fromString);
         PathParser.PathDataNode[] nodesTo = PathParser.createNodesFromPathData(toString);
 
-        Log.d(TAG, String.format("retrieved fromString: %s", fromString));
-        Log.d(TAG, String.format("retrieved toString: %s", toString));
-
         if (nodesFrom != null) {
             if (nodesTo != null) {
                 anim.setObjectValues(nodesFrom, nodesTo);
@@ -273,7 +271,7 @@ public class PathAnimatorInflater {
         }
 
         if (DBG_ANIMATOR_INFLATER && evaluator != null) {
-            Log.v(TAG, "create a new PathDataEvaluator here");
+            Log.v(LOG_TAG, "create a new PathDataEvaluator here");
         }
 
         return evaluator;

@@ -14,9 +14,9 @@ import android.support.annotation.NonNull;
  * @see android.view.View#setOutlineProvider(android.view.ViewOutlineProvider)
  */
 public final class Outline {
+
     /** @hide */
     public Path mPath;
-
     /** @hide */
     public Rect mRect;
     /** @hide */
@@ -158,51 +158,4 @@ public final class Outline {
         setRoundRect(rect.left, rect.top, rect.right, rect.bottom, radius);
     }
 
-//    /**
-//     * Sets the outline to the oval defined by input rect.
-//     */
-//    public void setOval(int left, int top, int right, int bottom) {
-//        if (left >= right || top >= bottom) {
-//            setEmpty();
-//            return;
-//        }
-//
-//        if ((bottom - top) == (right - left)) {
-//            // represent circle as round rect, for efficiency, and to enable clipping
-//            setRoundRect(left, top, right, bottom, (bottom - top) / 2.0f);
-//            return;
-//        }
-//
-//        if (mPath == null) mPath = new Path();
-//        mPath.reset();
-//        mPath.addOval(left, top, right, bottom, Path.Direction.CW);
-//        mRect = null;
-//    }
-//
-//    /**
-//     * Convenience for {@link #setOval(int, int, int, int)}
-//     */
-//    public void setOval(@NonNull Rect rect) {
-//        setOval(rect.left, rect.top, rect.right, rect.bottom);
-//    }
-//
-//    /**
-//     * Sets the Constructs an Outline from a
-//     * {@link android.graphics.Path#isConvex() convex path}.
-//     */
-//    public void setConvexPath(@NonNull Path convexPath) {
-//        if (convexPath.isEmpty()) {
-//            setEmpty();
-//            return;
-//        }
-//
-//        if (!convexPath.isConvex()) {
-//            throw new IllegalArgumentException("path must be convex");
-//        }
-//        if (mPath == null) mPath = new Path();
-//
-//        mPath.set(convexPath);
-//        mRect = null;
-//        mRadius = -1.0f;
-//    }
 }

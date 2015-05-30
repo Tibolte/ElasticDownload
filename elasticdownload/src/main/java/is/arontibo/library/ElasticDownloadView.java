@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 /**
  * Created by thibaultguegan on 15/03/15.
  */
-public class ElasticDownloadView extends FrameLayout implements IntroView.EnterAnimationListener{
+public class ElasticDownloadView extends FrameLayout implements IntroView.EnterAnimationListener {
 
     private static final String LOG_TAG = ElasticDownloadView.class.getSimpleName();
 
@@ -52,7 +52,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                     mProgressDownloadView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 } else {
                     mProgressDownloadView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
