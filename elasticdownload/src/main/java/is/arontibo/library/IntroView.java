@@ -2,13 +2,14 @@ package is.arontibo.library;
 
 import android.content.Context;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.wnafee.vector.compat.AnimatedVectorDrawable;
-import com.wnafee.vector.compat.DrawableCompat;
 
 /**
  * Created by thibaultguegan on 15/03/15.
@@ -29,8 +30,12 @@ public class IntroView extends ImageView {
 
     public IntroView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        AnimatedVectorDrawable drawable = AnimatedVectorDrawable.getDrawable(context, R.drawable.avd_start);
-        setImageDrawable(drawable);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setImageResource(R.drawable.avd_start);
+        } else {
+            AnimatedVectorDrawable drawable = AnimatedVectorDrawable.getDrawable(context, R.drawable.avd_start);
+            setImageDrawable(drawable);
+        }
     }
 
     /**
@@ -46,7 +51,8 @@ public class IntroView extends ImageView {
      */
 
     public void startAnimation() {
-        DrawableCompat drawable = (DrawableCompat) getDrawable();
+
+        Drawable drawable = getDrawable();
         Animatable animatable = (Animatable) drawable;
 
         AVDWrapper.Callback callback = new AVDWrapper.Callback() {
@@ -65,4 +71,5 @@ public class IntroView extends ImageView {
         AVDWrapper wrapper = new AVDWrapper(animatable, new Handler(), callback);
         wrapper.start(getContext().getResources().getInteger(R.integer.enter_animation_duration));
     }
+
 }

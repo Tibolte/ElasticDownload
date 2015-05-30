@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="500dp"
+    android:height="500dp"
+    android:viewportHeight="500"
+    android:viewportWidth="500">
+
+    <group>
+        <path
+            android:name="circle_line"
+            android:fillColor="@color/red_wood"
+            android:pathData="@string/circle_data"
+            android:strokeColor="@color/red_wood"
+            android:strokeWidth="5" />
+        <path
+            android:name="arrow_bubble"
+            android:fillColor="@android:color/white"
+            android:pathData="@string/arrow_data"
+            android:strokeColor="@android:color/white"
+            android:strokeWidth="2" />
+    </group>
+</vector>

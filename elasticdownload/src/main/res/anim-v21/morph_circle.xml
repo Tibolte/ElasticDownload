@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<set xmlns:android="http://schemas.android.com/apk/res/android">
 
     <objectAnimator
         android:duration="@integer/enter_animation_duration"
@@ -8,6 +7,6 @@
         android:propertyName="pathData"
         android:valueFrom="@string/circle_data"
         android:valueTo="@string/line_data"
-        app:vc_valueType="pathType" />
+        android:valueType="pathType" />
 
 </set>
