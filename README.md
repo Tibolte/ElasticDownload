@@ -10,6 +10,9 @@ We implemented it with a custom view, playing with canvas rotation and path draw
 ![](https://raw.githubusercontent.com/Tibolte/ElasticDownload/master/success.gif)
 ![](https://raw.githubusercontent.com/Tibolte/ElasticDownload/master/fail.gif)
 
+## System Requirement
+Android v2.2+
+
 Usage
 ===============================
 
