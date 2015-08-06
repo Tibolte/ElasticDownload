@@ -19,7 +19,7 @@ public class IntroView extends ImageView {
     private static final String LOG_TAG = IntroView.class.getSimpleName();
 
     public interface EnterAnimationListener {
-        public void onEnterAnimationFinished();
+        void onEnterAnimationFinished();
     }
 
     private EnterAnimationListener mListener;

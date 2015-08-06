@@ -96,7 +96,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         mProgressDownloadView.setVisibility(VISIBLE);
         mProgressDownloadView.setProgress(mProgressDownloadView.getProgress());
 
-        //do further actions if necessary
+        // Do further actions if necessary
     }
 
 }

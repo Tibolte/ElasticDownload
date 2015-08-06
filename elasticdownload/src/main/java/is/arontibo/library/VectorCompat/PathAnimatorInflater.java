@@ -1,5 +1,14 @@
 package is.arontibo.library.VectorCompat;
 
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.TypeEvaluator;
+import com.nineoldandroids.animation.ValueAnimator;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -9,15 +18,6 @@ import android.util.Log;
 import android.util.Xml;
 import android.view.InflateException;
 import android.view.animation.AnimationUtils;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.animation.TypeEvaluator;
-import com.nineoldandroids.animation.ValueAnimator;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +57,9 @@ public class PathAnimatorInflater {
             rnf.initCause(ex);
             throw rnf;
         } finally {
-            if (parser != null) parser.close();
+            if (parser != null) {
+                parser.close();
+            }
         }
     }
 
@@ -147,10 +149,10 @@ public class PathAnimatorInflater {
      * Creates a new animation whose parameters come from the specified context
      * and attributes set.
      *
-     * @param res The resources
+     * @param res   The resources
      * @param attrs The set of attributes holding the animation parameters
-     * @param anim Null if this is a ValueAnimator, otherwise this is an
-     *            ObjectAnimator
+     * @param anim  Null if this is a ValueAnimator, otherwise this is an
+     *              ObjectAnimator
      */
     private static ValueAnimator loadAnimator(Context c, Resources res, Resources.Theme theme,
                                               AttributeSet attrs, ValueAnimator anim, float pathErrorScale)
@@ -196,10 +198,10 @@ public class PathAnimatorInflater {
     }
 
     /**
-     * @param anim The animator, must not be null
-     * @param arrayAnimator Incoming typed array for Animator's attributes.
+     * @param anim                The animator, must not be null
+     * @param arrayAnimator       Incoming typed array for Animator's attributes.
      * @param arrayObjectAnimator Incoming typed array for Object Animator's
-     *            attributes.
+     *                            attributes.
      */
     private static void parseAnimatorFromTypeArray(ValueAnimator anim,
                                                    TypedArray arrayAnimator, TypedArray arrayObjectAnimator) {
@@ -242,7 +244,7 @@ public class PathAnimatorInflater {
     /**
      * Setup the Animator to achieve path morphing.
      *
-     * @param anim The target Animator which will be updated.
+     * @param anim          The target Animator which will be updated.
      * @param arrayAnimator TypedArray for the ValueAnimator.
      * @return the PathDataEvaluator.
      */
@@ -262,11 +264,11 @@ public class PathAnimatorInflater {
                             + " Can't morph from " + fromString + " to " + toString);
                 }
             } else {
-                anim.setObjectValues((Object)nodesFrom);
+                anim.setObjectValues((Object) nodesFrom);
             }
             evaluator = new PathDataEvaluator(PathParser.deepCopyNodes(nodesFrom));
         } else if (nodesTo != null) {
-            anim.setObjectValues((Object)nodesTo);
+            anim.setObjectValues((Object) nodesTo);
             evaluator = new PathDataEvaluator(PathParser.deepCopyNodes(nodesTo));
         }
 
@@ -280,9 +282,8 @@ public class PathAnimatorInflater {
     /**
      * Setup ObjectAnimator's property or values from pathData.
      *
-     * @param anim The target Animator which will be updated.
+     * @param anim                The target Animator which will be updated.
      * @param arrayObjectAnimator TypedArray for the ObjectAnimator.
-     *
      */
     private static void setupObjectAnimator(ValueAnimator anim, TypedArray arrayObjectAnimator) {
         ObjectAnimator oa = (ObjectAnimator) anim;
@@ -305,7 +306,8 @@ public class PathAnimatorInflater {
          * Care must be taken when using this option because on every evaluation
          * a new <code>PathParser.PathDataNode[]</code> will be allocated.
          */
-        private PathDataEvaluator() {}
+        private PathDataEvaluator() {
+        }
 
         /**
          * Create a PathDataEvaluator that reuses <code>nodeArray</code> for every evaluate() call.

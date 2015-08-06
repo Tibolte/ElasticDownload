@@ -49,11 +49,6 @@ public abstract class DrawableCompat extends Drawable {
     /**
      * Sets the bounds to which the hotspot is constrained, if they should be
      * different from the drawable bounds.
-     *
-     * @param left
-     * @param top
-     * @param right
-     * @param bottom
      */
     public void setHotspotBounds(int left, int top, int right, int bottom) {
     }
@@ -91,7 +86,6 @@ public abstract class DrawableCompat extends Drawable {
     /**
      * Parses a {@link android.graphics.PorterDuff.Mode} from a tintMode
      * attribute's enum value.
-     *
      */
     public static PorterDuff.Mode parseTintMode(int value, PorterDuff.Mode defaultMode) {
         switch (value) {

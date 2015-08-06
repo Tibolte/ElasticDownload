@@ -24,7 +24,8 @@ public final class Outline {
      * Constructs an empty Outline. Call one of the setter methods to make
      * the outline valid for use with a View.
      */
-    public Outline() {}
+    public Outline() {
+    }
 
     /**
      * Constructs an Outline with a copy of the data in src.
@@ -141,7 +142,9 @@ public final class Outline {
             return;
         }
 
-        if (mRect == null) mRect = new Rect();
+        if (mRect == null) {
+            mRect = new Rect();
+        }
         mRect.set(left, top, right, bottom);
         mRadius = radius;
         mPath = null;

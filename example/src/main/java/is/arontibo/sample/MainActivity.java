@@ -14,7 +14,8 @@ import is.arontibo.library.ProgressDownloadView;
 
 public class MainActivity extends ActionBarActivity {
 
-    @InjectView(R.id.elastic_download_view) ElasticDownloadView mElasticDownloadView;
+    @InjectView(R.id.elastic_download_view)
+    ElasticDownloadView mElasticDownloadView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
                 public void run() {
                     mElasticDownloadView.success();
                 }
-            }, 2*ProgressDownloadView.ANIMATION_DURATION_BASE);
+            }, 2 * ProgressDownloadView.ANIMATION_DURATION_BASE);
 
             return true;
         } else if (id == R.id.action_run_fail_animation) {
@@ -70,14 +71,14 @@ public class MainActivity extends ActionBarActivity {
                 public void run() {
                     mElasticDownloadView.setProgress(45);
                 }
-            }, 2*ProgressDownloadView.ANIMATION_DURATION_BASE);
+            }, 2 * ProgressDownloadView.ANIMATION_DURATION_BASE);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mElasticDownloadView.fail();
                 }
-            }, 3*ProgressDownloadView.ANIMATION_DURATION_BASE);
+            }, 3 * ProgressDownloadView.ANIMATION_DURATION_BASE);
 
             return true;
         }

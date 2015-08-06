@@ -22,9 +22,9 @@ public class AVDWrapper {
     };
 
     public interface Callback {
-        public void onAnimationDone();
+        void onAnimationDone();
 
-        public void onAnimationStopped();
+        void onAnimationStopped();
     }
 
     public AVDWrapper(Animatable drawable,
@@ -44,7 +44,9 @@ public class AVDWrapper {
         mDrawable.stop();
         mHandler.removeCallbacks(mAnimationDoneRunnable);
 
-        if (mCallback != null) mCallback.onAnimationStopped();
+        if (mCallback != null) {
+            mCallback.onAnimationStopped();
+        }
     }
 
 }
