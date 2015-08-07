@@ -3,6 +3,7 @@ package is.arontibo.library;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewTreeObserver;
@@ -63,6 +64,14 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
                 mProgressDownloadView.setBackgroundColor(mBackgroundColor);
             }
         });
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
+
+        mIntroView.init();
+        mIntroView.setVisibility(VISIBLE);
     }
 
     /**

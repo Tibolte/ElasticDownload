@@ -30,12 +30,7 @@ public class IntroView extends ImageView {
 
     public IntroView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setImageResource(R.drawable.avd_start);
-        } else {
-            AnimatedVectorDrawable drawable = AnimatedVectorDrawable.getDrawable(context, R.drawable.avd_start);
-            setImageDrawable(drawable);
-        }
+        init();
     }
 
     /**
@@ -49,6 +44,21 @@ public class IntroView extends ImageView {
     /**
      * MARK: Public functions
      */
+
+    public void init() {
+        // Reset the image view drawable if needed, we use the transparent color to remove it
+        setImageResource(android.R.color.transparent);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setImageResource(R.drawable.avd_start);
+
+            Drawable drawable = getDrawable();
+            drawable.invalidateSelf();
+        } else {
+            AnimatedVectorDrawable drawable = AnimatedVectorDrawable.getDrawable(getContext(), R.drawable.avd_start);
+            setImageDrawable(drawable);
+        }
+    }
 
     public void startAnimation() {
 
