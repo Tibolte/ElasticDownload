@@ -30,7 +30,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.ColorOptionsView, 0, 0);
         mBackgroundColor = a.getColor(R.styleable.ColorOptionsView_backgroundColor,
-                R.color.orange_salmon);
+                getResources().getColor(R.color.orange_salmon));
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
