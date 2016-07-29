@@ -107,5 +107,33 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
 
         // Do further actions if necessary
     }
+    
+    
+    /////////////////////////////////////////////////////////////////////////////
+    ///Added on 2016-07-29 by PGMacDesign as per Issue #27 in Github/////////////
+    /////////////////////////////////////////////////////////////////////////////
+    /**
+     * Set the background color of the Elastic Download View
+     * @param passedColor int Color Color to set the background
+     */
+    public void setBackgroundColor(int passedColor){
+        this.mBackgroundColor = passedColor;
+        this.mProgressDownloadView.setBackgroundColor(mBackgroundColor);
+    }
+
+    /**
+     * Overloaded method, takes in a String color to parse
+     * @param passedColor String of a color hex color (IE: #fd5c79) that can be parsed by
+     *                    Color.parseColor(string)
+     */
+    public void setBackgroundColor(String passedColor){
+        if(passedColor == null){
+            return;
+        }
+        try {
+            int color = Color.parseColor(passedColor);
+            this.setBackgroundColor(color);
+        } catch (Exception e){}
+    }
 
 }
