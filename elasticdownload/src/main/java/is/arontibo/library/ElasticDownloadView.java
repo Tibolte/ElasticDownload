@@ -130,7 +130,9 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
         try {
             int color = Color.parseColor(passedColor);
             this.setBackgroundColor(color);
-        } catch (IllegalArgumentException e) {}
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 
 }
