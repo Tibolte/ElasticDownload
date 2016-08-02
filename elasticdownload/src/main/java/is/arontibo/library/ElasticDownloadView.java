@@ -124,7 +124,7 @@ public class ElasticDownloadView extends FrameLayout implements IntroView.EnterA
      *                    Color.parseColor(string)
      */
     public void setBackgroundColor(String passedColor) {
-        if(passedColor == null){
+        if (passedColor == null){
             return;
         }
         try {
