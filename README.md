@@ -19,7 +19,7 @@ Usage
 Grab it from maven:
 
 ```groovy
-    compile 'com.github.tibolte:elasticdownload:1.0.+'
+    implementation 'com.github.tibolte:elasticdownload:1.0.+'
 ````
 
 
